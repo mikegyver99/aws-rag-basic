@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outdoor Gear Assistant</title>
+  <style>
+    /* ── Reset & base ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --surface2:  #22263a;
+      --border:    #2e3250;
+      --accent:    #4f8ef7;
+      --accent-h:  #6aa3ff;
+      --text:      #e4e6f0;
+      --text-dim:  #8b90a8;
+      --user-bg:   #1e3a5f;
+      --bot-bg:    #1a1d27;
+      --error:     #e05353;
+      --success:   #3ecf8e;
+      --radius:    12px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────────── */
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────── */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+
+    header .logo {
+      font-size: 28px;
+    }
+
+    header .title-group h1 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    header .title-group p {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    header .status-dot {
+      margin-left: auto;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px var(--success);
+      flex-shrink: 0;
+    }
+
+    header .status-dot.offline {
+      background: var(--error);
+      box-shadow: 0 0 6px var(--error);
+    }
+
+    /* ── Chat window ───────────────────────────────────────────────── */
+    .chat-window {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 20px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-window::-webkit-scrollbar { width: 5px; }
+    .chat-window::-webkit-scrollbar-track { background: transparent; }
+    .chat-window::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* ── Messages ──────────────────────────────────────────────────── */
+    .message {
+      display: flex;
+      gap: 10px;
+      max-width: 100%;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user  { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+
+    .message.user .avatar  { background: var(--user-bg); }
+    .message.bot  .avatar  { background: var(--surface2); }
+
+    .bubble {
+      max-width: calc(100% - 50px);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .message.user .bubble {
+      background: var(--user-bg);
+      border-bottom-right-radius: 4px;
+      color: var(--text);
+    }
+
+    .message.bot .bubble {
+      background: var(--bot-bg);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble.error {
+      background: rgba(224,83,83,0.12);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    /* Sources pills */
+    .sources {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .source-pill {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      cursor: default;
+    }
+
+    .source-pill strong {
+      color: var(--accent);
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      height: 22px;
+    }
+
+    .typing-indicator span {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40%            { transform: translateY(-6px); }
+    }
+
+    /* ── Input bar ─────────────────────────────────────────────────── */
+    .input-bar {
+      display: flex;
+      gap: 10px;
+      padding: 14px 20px 20px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .input-bar textarea {
+      flex: 1;
+      resize: none;
+      overflow: hidden;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font: inherit;
+      padding: 11px 14px;
+      min-height: 44px;
+      max-height: 180px;
+      outline: none;
+      transition: border-color 0.15s;
+      line-height: 1.5;
+    }
+
+    .input-bar textarea:focus  { border-color: var(--accent); }
+    .input-bar textarea::placeholder { color: var(--text-dim); }
+
+    .send-btn {
+      align-self: flex-end;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius);
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover:not(:disabled) { background: var(--accent-h); }
+    .send-btn:disabled { background: var(--border); cursor: not-allowed; }
+
+    .send-btn svg { width: 20px; height: 20px; }
+
+    /* ── Config panel (API endpoint) ───────────────────────────────── */
+    .config-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .config-bar label {
+      font-size: 11px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    .config-bar input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 12px;
+      padding: 5px 10px;
+      outline: none;
+    }
+
+    .config-bar input:focus { border-color: var(--accent); }
+
+    /* ── Suggestions ───────────────────────────────────────────────── */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 0 4px;
+    }
+
+    .suggestion-chip {
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .suggestion-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .app { max-width: 100%; }
+      header { padding: 12px 14px; }
+      .chat-window { padding: 14px 14px 6px; }
+      .input-bar { padding: 10px 14px 16px; }
+      .config-bar { padding: 6px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">🏔️</div>
+    <div class="title-group">
+      <h1>Outdoor Gear Assistant</h1>
+      <p>Powered by AWS Bedrock · Claude 3 Haiku · OpenSearch RAG</p>
+    </div>
+    <div class="status-dot" id="statusDot" title="API status"></div>
+  </header>
+
+  <!-- API endpoint config -->
+  <div class="config-bar">
+    <label for="apiEndpoint">API URL:</label>
+    <input
+      type="text"
+      id="apiEndpoint"
+      placeholder="https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod"
+      autocomplete="off"
+      spellcheck="false"
+    />
+  </div>
+
+  <!-- Chat window -->
+  <div class="chat-window" id="chatWindow">
+
+    <!-- Welcome message -->
+    <div class="message bot" id="welcomeMsg">
+      <div class="avatar">🤖</div>
+      <div class="bubble">
+        <strong>Hi there!</strong> I'm your outdoor gear assistant. Ask me anything about our catalog — waterproofing, weight, price comparisons, return policies, and more.<br><br>
+        <div class="suggestions" id="suggestions">
+          <button class="suggestion-chip">What's your lightest rain jacket?</button>
+          <button class="suggestion-chip">Do you have waterproof boots under $200?</button>
+          <button class="suggestion-chip">What sleeping bag is best for winter camping?</button>
+          <button class="suggestion-chip">Compare trekking pole options</button>
+          <button class="suggestion-chip">What's the return policy on helmets?</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Input bar -->
+  <div class="input-bar">
+    <textarea
+      id="questionInput"
+      placeholder="Ask about any outdoor gear…"
+      rows="1"
+      maxlength="2000"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" disabled title="Send (Enter)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // ── State ──────────────────────────────────────────────────────────
+  const STORAGE_KEY = 'rag_api_endpoint';
+  let isLoading = false;
+
+  // ── DOM refs ───────────────────────────────────────────────────────
+  const chatWindow    = document.getElementById('chatWindow');
+  const questionInput = document.getElementById('questionInput');
+  const sendBtn       = document.getElementById('sendBtn');
+  const apiEndpoint   = document.getElementById('apiEndpoint');
+  const statusDot     = document.getElementById('statusDot');
+  const suggestions   = document.getElementById('suggestions');
+
+  // ── Init ───────────────────────────────────────────────────────────
+  const savedEndpoint = localStorage.getItem(STORAGE_KEY) || '';
+  apiEndpoint.value = savedEndpoint;
+  updateSendBtn();
+
+  apiEndpoint.addEventListener('input', () => {
+    localStorage.setItem(STORAGE_KEY, apiEndpoint.value.trim());
+    updateSendBtn();
+  });
+
+  // ── Auto-resize textarea ───────────────────────────────────────────
+  questionInput.addEventListener('input', () => {
+    questionInput.style.height = 'auto';
+    questionInput.style.height = Math.min(questionInput.scrollHeight, 180) + 'px';
+    updateSendBtn();
+  });
+
+  // ── Send on Enter (Shift+Enter = newline) ──────────────────────────
+  questionInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!sendBtn.disabled) sendMessage();
+    }
+  });
+
+  sendBtn.addEventListener('click', sendMessage);
+
+  // ── Suggestion chips ───────────────────────────────────────────────
+  suggestions.addEventListener('click', (e) => {
+    const chip = e.target.closest('.suggestion-chip');
+    if (!chip) return;
+    questionInput.value = chip.textContent.trim();
+    questionInput.dispatchEvent(new Event('input'));
+    questionInput.focus();
+  });
+
+  // ── Helpers ────────────────────────────────────────────────────────
+  function updateSendBtn() {
+    const hasText     = questionInput.value.trim().length > 0;
+    const hasEndpoint = apiEndpoint.value.trim().length > 0;
+    sendBtn.disabled  = !hasText || !hasEndpoint || isLoading;
+  }
+
+  function setLoading(state) {
+    isLoading = state;
+    sendBtn.disabled = state;
+    questionInput.disabled = state;
+    updateSendBtn();
+  }
+
+  function setOnline(online) {
+    statusDot.classList.toggle('offline', !online);
+    statusDot.title = online ? 'API reachable' : 'API unreachable or not configured';
+  }
+
+  function scrollToBottom() {
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ── Append a user message ──────────────────────────────────────────
+  function appendUserMessage(text) {
+    const div = document.createElement('div');
+    div.className = 'message user';
+    div.innerHTML = `
+      <div class="avatar">🧗</div>
+      <div class="bubble">${escapeHtml(text)}</div>
+    `;
+    chatWindow.appendChild(div);
+    scrollToBottom();
+  }
+
+  // ── Append a typing indicator; returns the element ────────────────
+  function appendTyping() {
+    const div = document.createElement('div');
+    div.className = 'message bot';
+    div.id = 'typingIndicator';
+    div.innerHTML = `
+      <div class="avatar">🤖</div>
+      <div class="bubble">
+        <div class="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    `;
+    chatWindow.appendChild(div);
+    scrollToBottom();
+    return div;
+  }
+
+  // ── Replace typing indicator with actual answer ────────────────────
+  function replaceTypingWithAnswer(typingEl, answer, sources) {
+    const bubble = typingEl.querySelector('.bubble');
+    bubble.innerHTML = escapeHtml(answer).replace(/\n/g, '<br>');
+
+    if (sources && sources.length > 0) {
+      const sourcesDiv = document.createElement('div');
+      sourcesDiv.className = 'sources';
+      sources.forEach(s => {
+        const pill = document.createElement('div');
+        pill.className = 'source-pill';
+        const price = s.price != null ? ` · $${Number(s.price).toFixed(2)}` : '';
+        pill.innerHTML = `<strong>${escapeHtml(s.name || s.product_id || '')}</strong>${escapeHtml(price)}`;
+        sourcesDiv.appendChild(pill);
+      });
+      bubble.appendChild(sourcesDiv);
+    }
+    scrollToBottom();
+  }
+
+  // ── Replace typing indicator with error ───────────────────────────
+  function replaceTypingWithError(typingEl, message) {
+    const bubble = typingEl.querySelector('.bubble');
+    bubble.classList.add('error');
+    bubble.textContent = `⚠️ ${message}`;
+    scrollToBottom();
+  }
+
+  // ── Main send ──────────────────────────────────────────────────────
+  async function sendMessage() {
+    const question = questionInput.value.trim();
+    const endpoint = apiEndpoint.value.trim().replace(/\/+$/, '');
+    if (!question || !endpoint) return;
+
+    // Clear input
+    questionInput.value = '';
+    questionInput.style.height = 'auto';
+    updateSendBtn();
+
+    // Hide suggestion chips after first message
+    if (suggestions) suggestions.style.display = 'none';
+
+    appendUserMessage(question);
+    const typingEl = appendTyping();
+    setLoading(true);
+
+    try {
+      const url = `${endpoint}/query`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question }),
+      });
+
+      setOnline(true);
+
+      if (!response.ok) {
+        let errMsg = `HTTP ${response.status}`;
+        try {
+          const errBody = await response.json();
+          errMsg = errBody.error || errBody.message || errMsg;
+        } catch (_) {}
+        replaceTypingWithError(typingEl, errMsg);
+        return;
+      }
+
+      const data = await response.json();
+      const answer  = data.answer  || data.message || '(no answer)';
+      const sources = data.sources || [];
+      replaceTypingWithAnswer(typingEl, answer, sources);
+
+    } catch (err) {
+      setOnline(false);
+      replaceTypingWithError(
+        typingEl,
+        err.name === 'TypeError'
+          ? 'Could not reach the API. Check the URL and CORS settings.'
+          : err.message
+      );
+    } finally {
+      setLoading(false);
+      updateSendBtn();
+      questionInput.focus();
+    }
+  }
+</script>
+</body>
+</html>

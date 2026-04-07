@@ -1,0 +1,1001 @@
+[
+  {
+    "id": "PROD-001",
+    "name": "Trail Runner Pro 5000",
+    "category": "Footwear",
+    "description": "The Trail Runner Pro 5000 is engineered for serious trail athletes who demand performance on technical terrain. Its dual-density EVA midsole absorbs impact on rocky descents while the carbon-fiber rock plate shields your foot from sharp debris. The outsole features aggressive 4 mm lugs in a multi-directional pattern that bites into mud, loose gravel, and wet roots. A Gore-Tex Extended Comfort lining keeps your feet dry in stream crossings and light rain without sacrificing breathability. The reinforced toe cap and heel counter add structure where you need it most, while the interior Ortholite insole provides all-day cushioning for long efforts. Available in regular and wide widths.",
+    "price": 149.99,
+    "attributes": {
+      "color": "Slate Blue / Orange",
+      "material": "Gore-Tex / Mesh Upper",
+      "waterproof": true,
+      "weight_oz": 10.2,
+      "gender": "Unisex",
+      "sizes": ["6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "13"],
+      "terrain": "Trail"
+    },
+    "return_policy": "30-day returns in original unworn condition with original packaging. Defective items may be returned within 1 year."
+  },
+  {
+    "id": "PROD-002",
+    "name": "Summit Shield Hardshell Jacket",
+    "category": "Apparel",
+    "description": "Built for alpine conditions, the Summit Shield Hardshell Jacket uses a 3-layer Gore-Tex Pro construction that sheds wind-driven rain and wet snow while remaining fully breathable during sustained aerobic output. Fully seam-taped construction eliminates moisture entry at every stitch line. The helmet-compatible hood adjusts with one hand and rolls away neatly into the collar when not needed. Two chest pockets and one interior mesh drop-in pocket keep essentials accessible. Underarm zip vents dump heat instantly when the weather warms. Recco reflector panel sewn into the back aids rescue teams in avalanche terrain. Packs into its own chest pocket.",
+    "price": 349.00,
+    "attributes": {
+      "color": "Forest Green",
+      "material": "Gore-Tex Pro 3-Layer",
+      "waterproof": true,
+      "weight_oz": 16.8,
+      "gender": "Men's",
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "fit": "Regular",
+      "seasons": ["3-season", "winter"]
+    },
+    "return_policy": "60-day returns with receipt. Items must be clean and unaltered. Free return shipping on orders over $200."
+  },
+  {
+    "id": "PROD-003",
+    "name": "UltraLight Backpack 45L",
+    "category": "Packs & Bags",
+    "description": "The UltraLight Backpack 45L is designed for the gram-conscious thru-hiker who refuses to sacrifice organization. The Dyneema composite fabric main body weighs less than 400 g fully assembled yet resists abrasion better than nylon six times its weight. An internal aluminum stay and foam hipbelt transfer load efficiently to your hips on multi-day carries. The roll-top closure seals out rain without adding zipper weight, and two exterior side pockets and a front flat pocket handle water bottles, snacks, and maps. Ventilated back panel promotes airflow on hot-weather trips. HDPE framesheet included. Fits torso lengths 16–22 inches.",
+    "price": 279.95,
+    "attributes": {
+      "color": "Coyote Brown",
+      "material": "Dyneema Composite Fabric (DCF)",
+      "waterproof": false,
+      "weight_oz": 25.6,
+      "capacity_L": 45,
+      "frame": "Internal",
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns. Items must be free from dirt and damage. Lifetime repair guarantee on all fabric and hardware."
+  },
+  {
+    "id": "PROD-004",
+    "name": "Cascade Creek Waterproof Boot",
+    "category": "Footwear",
+    "description": "The Cascade Creek Waterproof Boot is purpose-built for wet, muddy, and river-adjacent trails where your feet take a beating. The full-grain leather upper is treated with a factory DWR coating that sheds standing water, while the nWP membrane lining provides a second line of defence. A Vibram Megagrip outsole with 5 mm lugs grips slimy rocks and steep switchbacks with equal confidence. The sculpted nylon shankplate torsionally stabilises the boot on uneven ground. Cushioned tongue and padded collar prevent hotspots on long days. Mid-cut height supports ankle without restricting natural movement. Machine-washable liner.",
+    "price": 189.00,
+    "attributes": {
+      "color": "Dark Chestnut",
+      "material": "Full-Grain Leather / nWP Membrane",
+      "waterproof": true,
+      "weight_oz": 28.0,
+      "gender": "Women's",
+      "sizes": ["5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "11"],
+      "terrain": "Hiking"
+    },
+    "return_policy": "30-day returns in original condition. Warranty covers manufacturer defects for 2 years."
+  },
+  {
+    "id": "PROD-005",
+    "name": "Alpine Glow Down Jacket",
+    "category": "Apparel",
+    "description": "The Alpine Glow Down Jacket uses 800-fill-power responsibly sourced goose down to deliver an outstanding warmth-to-weight ratio for cold-weather adventures. Hydrophobic Nikwax Hydrophobic Down treatment keeps loft in light moisture. The ripstop nylon shell is DWR-coated to handle brief rain showers. Elasticated cuffs, adjustable hem, and a snug insulated hood minimize heat loss. Packed into its own stuff sack it compresses to the size of a water bottle. Ideal as a midlayer in severe cold or standalone insulation in shoulder-season temperatures. Available in slim and regular fits.",
+    "price": 229.00,
+    "attributes": {
+      "color": "Burnt Orange",
+      "material": "800-Fill Hydrophobic Down / 20D Ripstop Nylon",
+      "waterproof": false,
+      "weight_oz": 12.1,
+      "gender": "Women's",
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "fit": "Slim",
+      "insulation": "Down 800-fill",
+      "temp_rating": "20°F"
+    },
+    "return_policy": "60-day returns. Down garments must be dry-cleaned before return. No returns on items that have been altered."
+  },
+  {
+    "id": "PROD-006",
+    "name": "Ridgeline Trekking Poles (Pair)",
+    "category": "Trekking Poles",
+    "description": "The Ridgeline Trekking Poles are constructed from 7075 aerospace aluminium for a balance of stiffness and durability at a price that makes sense for everyday users. Quick-lock twist mechanisms on both shafts allow tool-free adjustment from 100 to 135 cm in seconds. Ergonomic cork handles wick sweat and conform to hand shape over miles of use, with padded straps that prevent wrist fatigue. Carbide tips grip rock, ice, and hardpack while replaceable rubber tip caps protect flooring when you head indoors. Anti-shock spring system absorbs repetitive impact on long descents. Pole baskets included for both dirt trails and soft snow.",
+    "price": 74.95,
+    "attributes": {
+      "color": "Gunmetal / Red",
+      "material": "7075 Aluminium",
+      "weight_oz": 18.0,
+      "pole_count": 2,
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns with all original accessories. Poles may be returned even if extended, provided no damage is present."
+  },
+  {
+    "id": "PROD-007",
+    "name": "StormBreaker 3-Person Tent",
+    "category": "Camping",
+    "description": "The StormBreaker 3-Person Tent delivers all-season protection in a freestanding double-wall design. The DAC featherlite poles form a geodesic structure that has survived 80 mph wind-tunnel testing. The 40D ripstop nylon rainfly has a hydrostatic head rating of 4000 mm and is factory seam-sealed. The inner tent floor uses 70D nylon with a 10,000 mm rating to handle pooled water. Two vestibules provide covered gear storage for two occupants' kits. Interior organization includes a gear loft, gear pockets, and a lantern hook. Interior peak height of 46 inches allows comfortable sitting. Footprint sold separately.",
+    "price": 549.00,
+    "attributes": {
+      "color": "Red / Gray",
+      "material": "40D Ripstop Nylon / DAC Featherlite Poles",
+      "waterproof": true,
+      "weight_oz": 112.0,
+      "capacity_L": 3,
+      "seasons": ["4-season", "winter"],
+      "pole_count": 3
+    },
+    "return_policy": "30-day returns in original packaging. Tents must be clean and dry. Stakes, poles, and all accessories must be included."
+  },
+  {
+    "id": "PROD-008",
+    "name": "Merino Base Layer Top",
+    "category": "Apparel",
+    "description": "Crafted from 180 gsm ZQ-certified merino wool, this base layer top regulates body temperature across a wide range of conditions — warm enough for cold starts, breathable enough to prevent overheating during hard efforts. Merino's natural protein structure absorbs moisture vapour before you even feel wet, and its antimicrobial properties resist odour for multi-day use without washing. Flatlock seams eliminate chafing under a pack or harness. Offset shoulder seams prevent pressure points. The crew neck fits cleanly under a midlayer collar. Suitable for skiing, hiking, climbing, and travel. Hand or machine wash cold.",
+    "price": 89.95,
+    "attributes": {
+      "color": "Charcoal",
+      "material": "100% Merino Wool 180gsm",
+      "waterproof": false,
+      "weight_oz": 6.4,
+      "gender": "Men's",
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "fit": "Regular"
+    },
+    "return_policy": "30-day returns. Merino items must be unwashed and unscented. Tags must be attached."
+  },
+  {
+    "id": "PROD-009",
+    "name": "Helios Headlamp 400",
+    "category": "Lighting",
+    "description": "The Helios Headlamp 400 outputs a maximum of 400 lumens from its dual LED array — enough to light up a trail at jogging pace. Three modes (High, Medium, Red) cover everything from technical navigation to preserving night vision at camp. The IPX4 water-resistant housing stands up to rain and stream splashes. A single 18650 rechargeable battery powers up to 40 hours on medium mode, and the USB-C charging port lets you top off from a power bank on the trail. The adjustable headband fits over helmets, beanies, and bare heads. Tilt mechanism allows precise beam angle. Rear red blinker increases visibility to drivers and cyclists.",
+    "price": 54.99,
+    "attributes": {
+      "color": "Black / Yellow",
+      "material": "ABS Plastic",
+      "waterproof": false,
+      "weight_oz": 3.2,
+      "lumens": 400,
+      "runtime_h": 40,
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns with original packaging and battery. Warranty covers defects for 2 years."
+  },
+  {
+    "id": "PROD-010",
+    "name": "Trailblaze Sleeping Bag -10°F",
+    "category": "Camping",
+    "description": "The Trailblaze Sleeping Bag is rated to -10°F for cold-weather mountaineering, winter camping, and high-altitude expeditions. Filled with 850-fill-power Responsible Down Standard certified duck down, it achieves exceptional warmth without bulk. The mummy-style cut minimises dead air space, and a differential cut inner shell prevents down compression points. Full-length draft tube behind the zipper blocks cold air infiltration. An anatomically shaped footbox gives toes room to move. Sleeping pad sleeve on the underside keeps you on your insulation. Compatible with the matching sleeping bag liner for extended warmth in extreme cold.",
+    "price": 449.00,
+    "attributes": {
+      "color": "Navy Blue",
+      "material": "850-Fill RDS Goose Down / 15D Nylon Shell",
+      "waterproof": false,
+      "weight_oz": 38.4,
+      "temp_rating": "-10°F",
+      "length_ft": 6.5,
+      "gender": "Men's"
+    },
+    "return_policy": "60-day returns. Sleeping bags must be returned in their compression sack. Heavily used items are not eligible."
+  },
+  {
+    "id": "PROD-011",
+    "name": "Swift Current Packraft",
+    "category": "Paddling",
+    "description": "The Swift Current Packraft opens up river crossings and whitewater laps to backpackers and adventure racers. Made from 210-denier TPU-laminated fabric, the hull resists abrasion from boulder gardens and rocky river beds. Self-bailing whitewater deck handles Class III rapids and surf waves. Inflation via an included drybag-style pump sack takes less than 4 minutes. Coils flat into a stuff sack roughly the size of a 2-litre bottle, weighing under 3 kg. Adjustable foam backrest and thigh straps give control on technical water. Available with or without a spray skirt attachment.",
+    "price": 1195.00,
+    "attributes": {
+      "color": "Signal Orange",
+      "material": "210D TPU-Laminated Fabric",
+      "waterproof": true,
+      "weight_oz": 96.0,
+      "sport": "Paddling",
+      "terrain": "Whitewater"
+    },
+    "return_policy": "14-day returns on uninflated, unrigged packrafts only. Once inflated, returns only accepted for manufacturing defects."
+  },
+  {
+    "id": "PROD-012",
+    "name": "Summit Seeker Climbing Harness",
+    "category": "Climbing",
+    "description": "The Summit Seeker Climbing Harness is designed for single-pitch sport climbing, gym use, and moderate alpine routes. The pre-threaded Doubleback buckle on the waistbelt eliminates mis-buckle errors for beginners. Four DoubleBack gear loops hold racks comfortably without digging into your hips. The Dual Core nylon construction distributes force evenly across the tie-in zone. UIAA and CE EN 12277 certified. Padded waistbelt and leg loops remain comfortable on routes with long hangs. Reflective piping improves visibility on early starts. Fits waists 28–42 inches and thighs 19–27 inches.",
+    "price": 64.95,
+    "attributes": {
+      "color": "Black / Teal",
+      "material": "Nylon / Polyester",
+      "weight_oz": 11.5,
+      "gender": "Unisex",
+      "sport": "Climbing"
+    },
+    "return_policy": "30-day returns in unused condition. Life-safety items cannot be returned once used for climbing."
+  },
+  {
+    "id": "PROD-013",
+    "name": "Nomad Solar Charger 21W",
+    "category": "Electronics",
+    "description": "The Nomad Solar Charger 21W folds into a compact trifold panel that slips into a pack lid for opportunistic charging on the go. Three monocrystalline silicon cells achieve up to 21% efficiency, generating 21 W in full sun. The integrated USB-A and USB-C ports can charge two devices simultaneously, with an auto-detect circuit that pushes the optimal current for each device. Hinged panels lay flat on a tent fly or clip to a pack with four corner attachment loops. Waterproof coating handles sudden rain. Comes with a storage pouch and multiple device tips. Ideal for 3–7 day trips where battery packs run low.",
+    "price": 129.95,
+    "attributes": {
+      "color": "Olive",
+      "material": "Monocrystalline Silicon / ETFE Coating",
+      "waterproof": true,
+      "weight_oz": 17.6,
+      "sport": "Hiking",
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns with all original cables and accessories. Electronics defects covered by 1-year warranty."
+  },
+  {
+    "id": "PROD-014",
+    "name": "ThermoCore Sleeping Pad",
+    "category": "Camping",
+    "description": "The ThermoCore Sleeping Pad uses a 3.5-cm cell ThermaCore foam laminated to a reflective barrier that bounces radiated body heat back to the sleeper, achieving an R-value of 5.7 — sufficient for snow camping without a sleeping bag upgrade. The closed-cell foam does not absorb moisture or compress with age. A textured sleeping surface prevents bag slippage. Folds accordion-style into a compact package that straps to the outside of any pack. No inflation needed; unfold and sleep. Dimensions: 72 × 22 inches. Available in regular and long sizes.",
+    "price": 44.95,
+    "attributes": {
+      "color": "Blue / Silver",
+      "material": "Closed-Cell EVA Foam / Reflective Barrier",
+      "waterproof": true,
+      "weight_oz": 14.7,
+      "r_value": 5.7,
+      "length_ft": 6.0,
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in clean condition. Sleeping pads showing signs of heavy use are not eligible."
+  },
+  {
+    "id": "PROD-015",
+    "name": "FlexShell Softshell Pants",
+    "category": "Apparel",
+    "description": "The FlexShell Softshell Pants are made from a 4-way-stretch 85% polyester / 15% spandex blend with a DWR finish that shrugs off light precipitation. Articulated patterning at the knee and seat allows full range of motion for scrambling, crouching, and kicking steps in snow. Two zippered thigh pockets and one rear snap pocket secure valuables. A partial elastic waistband with an internal draw cord works with or without a belt. Boot-compatible leg openings zip wide for easy on and off over mountaineering boots. The subtle fleece backer adds comfort against skin in cold temperatures without bulk.",
+    "price": 119.00,
+    "attributes": {
+      "color": "Charcoal",
+      "material": "85% Polyester / 15% Spandex with DWR",
+      "waterproof": false,
+      "weight_oz": 14.2,
+      "gender": "Men's",
+      "sizes": ["28", "30", "32", "34", "36", "38"],
+      "fit": "Regular"
+    },
+    "return_policy": "30-day returns in original condition. Pants must be unwashed and free of odour."
+  },
+  {
+    "id": "PROD-016",
+    "name": "PureFlow Water Filter",
+    "category": "Water Treatment",
+    "description": "The PureFlow Water Filter is a hollow-fibre squeeze filter that removes 99.9999% of bacteria and 99.9% of protozoa from any freshwater source. The 0.1-micron filter screws directly onto standard 28-mm wide-mouth bottles or attaches to a hydration reservoir drinking tube. Flow rate starts at 2 litres per minute when clean, maintained by back-flushing with the included syringe. The ultralight build weighs just 2 oz and packs into a shirt pocket. Filter lifespan is rated at 100,000 gallons — effectively lifetime use for recreational users. No tablets, no batteries, no wait time.",
+    "price": 29.95,
+    "attributes": {
+      "color": "Blue / White",
+      "material": "Hollow Fibre / ABS Housing",
+      "waterproof": true,
+      "weight_oz": 2.0,
+      "sport": "Hiking",
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in original packaging. Filters that have been used cannot be returned for hygiene reasons unless defective."
+  },
+  {
+    "id": "PROD-017",
+    "name": "BoulderGrip Climbing Shoes",
+    "category": "Footwear",
+    "description": "The BoulderGrip Climbing Shoes feature a high-tension Vibram XS Grip2 rubber sole tuned for bouldering and sport climbing on overhanging walls. The aggressive downturned last concentrates power in the toe for precise edging and toe-hooking. A no-edge toe box design increases surface area contact on slopers. Velcro closure provides micro-adjustability between hard pitches. A perforated lining wicks moisture to keep feet comfortable on long sessions at the gym. The low-cut design saves weight and allows full ankle mobility. Recommended to size down half a size from your street shoe for performance fit.",
+    "price": 139.00,
+    "attributes": {
+      "color": "Red / Black",
+      "material": "Vibram XS Grip2 / Synthetic Upper",
+      "waterproof": false,
+      "weight_oz": 8.8,
+      "gender": "Unisex",
+      "sizes": ["EU 35", "EU 36", "EU 37", "EU 38", "EU 39", "EU 40", "EU 41", "EU 42", "EU 43", "EU 44", "EU 45"],
+      "sport": "Climbing"
+    },
+    "return_policy": "30-day returns in unworn condition. Rubber sole climbing shoes showing any chalking or rubber wear cannot be returned."
+  },
+  {
+    "id": "PROD-018",
+    "name": "Glacier Guide Ice Axe 60cm",
+    "category": "Climbing",
+    "description": "The Glacier Guide Ice Axe is a classic B-rated general mountaineering axe suited for glacier travel, moderate snow slopes, and self-arrest practice. The 60 cm shaft is constructed from 7075 aluminium with a textured rubber spike grip. The stainless steel head features a positive-clearance pick for firm purchase on hard snow and a broad adze suitable for step cutting and anchoring. The swing weight is optimised for balance in hand and efficiency on long ridge traverses. Meets CE EN 13089 standard. Includes a rubber spike protector and head cover for pack transport. Available in 50 and 70 cm.",
+    "price": 89.00,
+    "attributes": {
+      "color": "Silver / Black",
+      "material": "7075 Aluminium / Stainless Steel Head",
+      "weight_oz": 21.2,
+      "sport": "Climbing",
+      "terrain": "Alpine"
+    },
+    "return_policy": "30-day returns in unused condition. Safety equipment once used on ice or rock is not eligible for return."
+  },
+  {
+    "id": "PROD-019",
+    "name": "Canyon Cruiser Cycling Jersey",
+    "category": "Apparel",
+    "description": "The Canyon Cruiser Cycling Jersey is cut for an aerodynamic road fit that stays comfortable on rides up to five hours. The body is constructed from a 100% recycled polyester moisture-wicking fabric that moves sweat to the surface for rapid evaporation. Three rear cargo pockets have a slight downward pitch to prevent snacks and phone from bouncing out. A silicone gripper at the hem prevents the jersey from riding up during sprints. Full-length YKK zipper vents airflow on climbs and closed stays warm on descents. Reflective logo and rear strip improve driver visibility in low light. UPF 40+ sun protection.",
+    "price": 79.00,
+    "attributes": {
+      "color": "Pacific Blue / White",
+      "material": "100% Recycled Polyester",
+      "waterproof": false,
+      "weight_oz": 5.6,
+      "gender": "Men's",
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "fit": "Slim",
+      "sport": "Cycling"
+    },
+    "return_policy": "30-day returns in unwashed condition with all tags attached. Jerseys washed or worn on a bike are not eligible."
+  },
+  {
+    "id": "PROD-020",
+    "name": "PackStove Canister Stove",
+    "category": "Cooking",
+    "description": "The PackStove Canister Stove screws directly onto any isobutane-propane mix canister and unfolds four chrome-steel pot supports rated to hold pots up to 2 litres. The brass burner head delivers 10,000 BTU for fast boil times — 500 ml in under 3 minutes. The piezo igniter eliminates the need to carry matches. Flame is infinitely variable via the gas valve from a whisper simmer to a full boil. The whole stove collapses into itself and weighs 2.6 oz, fitting inside the pot it heats. Wind baffles on the pot supports improve efficiency in breezy conditions. Compatible with 100–450 g canisters.",
+    "price": 44.95,
+    "attributes": {
+      "color": "Silver / Red",
+      "material": "Brass / Chrome Steel",
+      "waterproof": false,
+      "weight_oz": 2.6,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns with original packaging. Stoves that show signs of ignition cannot be returned for safety reasons."
+  },
+  {
+    "id": "PROD-021",
+    "name": "Ridgeback Daypack 20L",
+    "category": "Packs & Bags",
+    "description": "The Ridgeback Daypack 20L is a versatile summit pack for day hikes, ski tours, and bike commutes. The breathable AirMesh back panel and sculpted foam shoulder straps keep the pack off your back for ventilation on hot approaches. Dedicated laptop sleeve fits devices up to 15 inches. A removable hipbelt with two small pockets transfers weight on longer carries. Trekking-pole carry loops, ice-axe attachment, and a helmet carry bungee cover the full range of mountain-day activities. Front panel zip organiser pocket has key clip and card slots. Hydration reservoir sleeve holds bladders up to 3 litres.",
+    "price": 99.00,
+    "attributes": {
+      "color": "Midnight Black",
+      "material": "Ripstop Nylon / AirMesh",
+      "waterproof": false,
+      "weight_oz": 22.4,
+      "capacity_L": 20,
+      "frame": "Frameless",
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in clean condition with all straps and attachments intact."
+  },
+  {
+    "id": "PROD-022",
+    "name": "HighRoute Trekking Boot",
+    "category": "Footwear",
+    "description": "The HighRoute Trekking Boot combines full-grain nubuck leather panels with a nylon mesh upper for a balance of durability and weight that works from gentle forest paths to rocky ridgelines. The lace-to-toe lacing system lets you customise fit in the forefoot and heel independently. A moulded nylon shank provides torsional rigidity without adding excess weight. The Vibram Ecostep outsole (30% recycled rubber) grips a range of surfaces from wet granite to dry talus. Factory-applied GORE-TEX membrane keeps your feet dry in sustained wet conditions. Stack height provides enough cushion for 20+ km days with a loaded pack.",
+    "price": 215.00,
+    "attributes": {
+      "color": "Tobacco / Black",
+      "material": "Nubuck Leather / GORE-TEX / Vibram Ecostep",
+      "waterproof": true,
+      "weight_oz": 34.0,
+      "gender": "Unisex",
+      "sizes": ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "12", "13"],
+      "terrain": "Hiking"
+    },
+    "return_policy": "30-day returns in original condition. Boots must not have been worn outdoors. Defects covered for 1 year."
+  },
+  {
+    "id": "PROD-023",
+    "name": "IceBorn Insulated Water Bottle 32oz",
+    "category": "Hydration",
+    "description": "The IceBorn Insulated Water Bottle uses double-wall vacuum insulation to keep beverages cold for 24 hours or hot for 12 hours with zero condensation on the exterior. The 18/8 stainless steel inner wall is BPA-free and does not retain or impart flavours. A wide 2-inch mouth fits standard ice cubes and allows easy cleaning with a bottle brush. The leak-proof lid features a silicone gasket and a locking bail handle. Powder-coated exterior provides grip and resists scratches. Fits most cup holders. Dishwasher safe (lid hand-wash recommended).",
+    "price": 39.95,
+    "attributes": {
+      "color": "Alpine Teal",
+      "material": "18/8 Stainless Steel",
+      "waterproof": true,
+      "weight_oz": 15.2,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns. Bottles must be clean and odour-free. Lifetime warranty against manufacturing defects."
+  },
+  {
+    "id": "PROD-024",
+    "name": "WindWall Fleece Jacket",
+    "category": "Apparel",
+    "description": "The WindWall Fleece Jacket layers a Grid Fleece interior — which traps warmth in thousands of tiny air pockets — against a wind-resistant polyester face fabric that stops convective heat loss dead in its tracks. The result is a midlayer that keeps you warm on blustery ridge walks without the bulk of a hardshell. Two zippered hand pockets and one interior chest pocket keep essentials organised. Thumb loops at the cuff keep sleeves over gloves. The chin-protector lined collar prevents zipper rash. Low-pill fabric construction extends the life of the garment in a pack. Machine washable.",
+    "price": 99.95,
+    "attributes": {
+      "color": "Cobalt Blue",
+      "material": "Grid Fleece / Wind-Resistant Polyester",
+      "waterproof": false,
+      "weight_oz": 13.6,
+      "gender": "Women's",
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "fit": "Regular",
+      "insulation": "Fleece"
+    },
+    "return_policy": "30-day returns in unwashed condition. Items used in heavy outdoor activity showing significant wear are not eligible."
+  },
+  {
+    "id": "PROD-025",
+    "name": "RapidShell Rain Jacket",
+    "category": "Apparel",
+    "description": "The RapidShell Rain Jacket is an ultralight 2.5-layer packable rain jacket designed for runners, fastpackers, and cyclists who need protection they barely notice. At 4.8 oz, it compresses to a fist-sized stuff sack. The 15D ripstop nylon face fabric is fully taped at all seams and treated with a C0 DWR finish that is PFAS-free. Underarm seam vents and a front zip that stops short of the collar enhance breathability on the move. The hood rolls into the collar for storage. Drawcord hem and adjustable wrist cuffs seal out wind. Does not include a midlayer — designed to pair with base layers only.",
+    "price": 159.00,
+    "attributes": {
+      "color": "Neon Yellow",
+      "material": "15D Ripstop Nylon / 2.5-Layer Construction",
+      "waterproof": true,
+      "weight_oz": 4.8,
+      "gender": "Unisex",
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "fit": "Regular",
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns. Must not have been worn in rain or washed. Free exchange for a different size within 60 days."
+  },
+  {
+    "id": "PROD-026",
+    "name": "AlpineLite Crampon 10-Point",
+    "category": "Climbing",
+    "description": "The AlpineLite Crampon 10-Point is designed for hard-packed snow, moderate glaciers, and approach routes that stop short of vertical ice. Aluminium alloy construction saves weight without sacrificing structural integrity. The semi-rigid bar connects two adjustable frames to fit boot sizes EU 36–47. Anti-balling plates clip to the points to prevent snow build-up underfoot on sticky snow surfaces. All ten points are replaceable when worn. The hybrid binding system accommodates frame, step-in, or strap-mount boots. Includes padded nylon storage pouch. UIAA rated. Maximum angle of slope: 50 degrees.",
+    "price": 109.00,
+    "attributes": {
+      "color": "Silver",
+      "material": "Aluminium Alloy",
+      "weight_oz": 19.5,
+      "sport": "Climbing",
+      "terrain": "Alpine"
+    },
+    "return_policy": "30-day returns in unused condition with all binding parts and pouch. Safety equipment cannot be returned once fitted to boots and used on ice."
+  },
+  {
+    "id": "PROD-027",
+    "name": "Summit Seeker 70L Expedition Pack",
+    "category": "Packs & Bags",
+    "description": "Engineered for week-long expeditions and hut-to-hut tours, the Summit Seeker 70L Expedition Pack features a fully adjustable torso length (15–22 inches) and replaceable hipbelt wings to dial fit for any body shape. The aluminium J-frame transfers weight predictably, and side-compression straps reduce the pack's profile as food is consumed. A detachable top lid converts to a standalone summit pack. Front U-zip panel opens the main body like a duffle for fast packing. Side and front crampon attachment points, ice axe loops, and bottom sleeping bag compartment make this a genuine alpine workhorse. 500D Cordura base protects against rock and ice abrasion.",
+    "price": 399.00,
+    "attributes": {
+      "color": "Dark Navy / Orange",
+      "material": "210D Nylon / 500D Cordura Base",
+      "waterproof": false,
+      "weight_oz": 72.0,
+      "capacity_L": 70,
+      "frame": "Internal",
+      "gender": "Unisex"
+    },
+    "return_policy": "60-day returns in clean, undamaged condition. Pack must include all components (lid, hipbelt, framesheet)."
+  },
+  {
+    "id": "PROD-028",
+    "name": "AquaStream Gravity Filter System",
+    "category": "Water Treatment",
+    "description": "The AquaStream Gravity Filter System treats up to 4 litres of water hands-free — just fill the dirty bag, hang it from a tree, and gravity does the work. The hollow-fibre filter removes bacteria, protozoa, and particulates to 0.1 microns. Flow rate is 1.5 litres per minute when filter is clean. The 4-litre dirty reservoir and 4-litre clean reservoir are both made from food-grade silicone that rolls flat for packing. A shutoff valve at the filter element allows mid-flow suspension. Backflush the filter with a syringe to restore flow rate. Ideal for car campers, group basecamp operations, and ultralight hikers who want passive filtration.",
+    "price": 59.95,
+    "attributes": {
+      "color": "Blue / Gray",
+      "material": "Hollow Fibre / Food-Grade Silicone",
+      "waterproof": true,
+      "weight_oz": 5.2,
+      "sport": "Hiking",
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns with all components. Used water filters cannot be returned for hygiene reasons unless defective."
+  },
+  {
+    "id": "PROD-029",
+    "name": "Summit Grill Titanium",
+    "category": "Cooking",
+    "description": "The Summit Grill Titanium is a ultralight folding grill rack designed for open-fire cooking in backcountry camps where wood fires are permitted. Grade 1 titanium mesh grate spans 22 × 15 cm, enough to grill two steaks or hold a 2-litre pot. Four collapsible legs fold flat against the grate; deployed, they raise the cooking surface 8 cm for optimal fire airflow. Titanium's corrosion resistance means no rust regardless of how long the grill lives in your kit bag. The entire unit weighs 4.2 oz and stores in its own canvas drawstring bag. Compatible with canister stoves in a pinch.",
+    "price": 59.00,
+    "attributes": {
+      "color": "Titanium",
+      "material": "Grade 1 Titanium",
+      "waterproof": false,
+      "weight_oz": 4.2,
+      "gender": "Unisex",
+      "sport": "Camping"
+    },
+    "return_policy": "30-day returns in unused condition. Items showing carbon or heat discolouration are not eligible for return."
+  },
+  {
+    "id": "PROD-030",
+    "name": "PowerStride Trail Running Vest",
+    "category": "Packs & Bags",
+    "description": "The PowerStride Trail Running Vest is purpose-built for race day and long training runs where carrying a traditional pack is too cumbersome. Two 500 ml front soft flasks sit in accessible chest pockets — no more waiting at aid stations. The vest body is knitted from a stretch mesh that conforms to your torso and eliminates bounce even on downhill technical sections. A 6-litre main compartment with rolltop closure fits mandatory gear, layers, and nutrition. Magnetic chest clip prevents flask slippage. Compatible with a 1.5-litre hydration bladder. Reflective piping on front and back. Fits chests 76–116 cm.",
+    "price": 149.00,
+    "attributes": {
+      "color": "Racing Red",
+      "material": "Stretch Mesh / Ripstop Panel",
+      "waterproof": false,
+      "weight_oz": 9.6,
+      "capacity_L": 6,
+      "frame": "Frameless",
+      "gender": "Unisex",
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns in clean condition. Vests used in a race are not eligible unless defective."
+  },
+  {
+    "id": "PROD-031",
+    "name": "Snowfield Ski Goggles",
+    "category": "Eyewear",
+    "description": "The Snowfield Ski Goggles use a dual-lens cylindrical design with a 180-degree peripheral field of view. The inner anti-fog lens coating and triple-layer foam gasket work together to prevent fogging even during high-intensity skiing. The mirrored outer lens offers CAT 3 UV protection, blocking 99.9% of UVA/UVB radiation. Magnetic quick-change lens system swaps lenses in under 10 seconds for changing light conditions. Fits over most prescription glasses frames. OTG (over-the-glasses) compatible. Helmet-compatible strap width. Includes carry bag and clear spare lens.",
+    "price": 89.95,
+    "attributes": {
+      "color": "Black / Mirrored Blue Lens",
+      "material": "Polycarbonate Lens / TPU Frame",
+      "waterproof": false,
+      "weight_oz": 5.6,
+      "gender": "Unisex",
+      "sport": "Skiing"
+    },
+    "return_policy": "30-day returns in original packaging. Goggles with scratched lenses cannot be returned."
+  },
+  {
+    "id": "PROD-032",
+    "name": "CanyonTech Dry Bag 20L",
+    "category": "Packs & Bags",
+    "description": "The CanyonTech Dry Bag provides bombproof waterproofing for canyoneering, kayaking, and river camping. 500D PVC-free Tarpaulin fabric is ultrasonically welded — no stitching means zero leak points. The roll-top closure, secured by two side-release buckles, maintains a full seal after 20 minutes of submersion at 3 metres depth. An internal hydration sleeve doubles as a gear organiser. External lash points on the front allow gear attachment. Dimensions 51 × 30 cm when open. Available in 10, 20, and 40 litres. All colours are high-visibility for easier retrieval if dropped in water.",
+    "price": 49.95,
+    "attributes": {
+      "color": "Safety Orange",
+      "material": "500D PVC-Free Tarpaulin",
+      "waterproof": true,
+      "weight_oz": 13.6,
+      "capacity_L": 20,
+      "sport": "Paddling",
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in unused condition. Bags showing submersion use cannot be returned."
+  },
+  {
+    "id": "PROD-033",
+    "name": "TorchBearer Lantern 1000",
+    "category": "Lighting",
+    "description": "The TorchBearer Lantern 1000 outputs 1000 lumens at maximum brightness to light up an entire campsite or picnic shelter. A built-in dimmer wheel adjusts output from 10% to 100% with corresponding runtime from 8 to 80 hours on four AA lithium batteries. The collapsible hanging hook and flat base mean you can hang it from a ridgeline or set it on a table. The diffuser panel creates even light without harsh shadows. IPX6 rated against driving rain. Dual-mode operation: white and warm-white colour temperatures. Works with both lithium and alkaline batteries. Dimensions when folded: 12 × 8 cm.",
+    "price": 64.95,
+    "attributes": {
+      "color": "Gray / Yellow",
+      "material": "ABS Plastic / Polycarbonate Diffuser",
+      "waterproof": false,
+      "weight_oz": 9.8,
+      "lumens": 1000,
+      "runtime_h": 80,
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in original packaging. Batteries not included. Warranty covers defects for 2 years."
+  },
+  {
+    "id": "PROD-034",
+    "name": "RiverRun Paddling Jacket",
+    "category": "Apparel",
+    "description": "Designed for kayakers, canoeists, and packrafters, the RiverRun Paddling Jacket uses a 3-layer Gore-Tex Pro construction with latex neoprene tunnel wrist gaskets and a neoprene tunnel waist gasket that seals out the water in capsize scenarios. The helmet-compatible hood with full adjustment prevents flush drowning in whitewater environments. Pit-zip vents dump heat during intense paddling sessions. Chest zip pocket stows essentials within reach while on the water. The underarm ergonomic patterning eliminates fabric bunching in the paddle stroke zone. CE EN 471 compliant for swift-water rescue operations.",
+    "price": 379.00,
+    "attributes": {
+      "color": "Safety Yellow",
+      "material": "Gore-Tex Pro 3-Layer / Neoprene Gaskets",
+      "waterproof": true,
+      "weight_oz": 22.4,
+      "gender": "Unisex",
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "sport": "Paddling"
+    },
+    "return_policy": "60-day returns in clean, dry condition. Life-safety items in paddling sports are non-returnable if used in whitewater."
+  },
+  {
+    "id": "PROD-035",
+    "name": "Ultramarathon Carbon Pole Set",
+    "category": "Trekking Poles",
+    "description": "The Ultramarathon Carbon Pole Set is engineered for trail runners and fastpackers who want minimal weight and maximum energy return. Full carbon fibre shafts are 20% lighter than aluminium equivalents at the same stiffness rating. The Z-pole fold mechanism collapses each pole to 36 cm, fitting in a running vest side pocket or back compression strap. Cork handle with extended soft grip below allows for choking up on steep uphills. The tip system accepts both a standard carbide tip and a trail running tip for different terrain. Wrist leashes stow in the grip when poles are folded. Each pole: 110 g.",
+    "price": 189.00,
+    "attributes": {
+      "color": "Black / White",
+      "material": "Full Carbon Fibre",
+      "weight_oz": 7.8,
+      "pole_count": 2,
+      "gender": "Unisex",
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns in original condition. Carbon poles showing stress fractures or impact damage cannot be returned."
+  },
+  {
+    "id": "PROD-036",
+    "name": "StormCore Bivy",
+    "category": "Camping",
+    "description": "The StormCore Bivy is a single-person emergency shelter designed for alpinists and adventure racers who need to survive unexpected bivouacs. A Gore-Tex Paclite shell and a siliconised nylon floor keep you dry from above and below in sustained storm conditions. Internal diameter provides enough room for a sleeping bag and pad. A small pole sleeve lifts the head end off your face and creates breathing space. The taped zipper runs three-quarters of the length and terminates in a rain-flap baffle to shed entry splash. Stuff sack included. Weight: 350 g. Suitable for emergency use or planned ultralight expeditions.",
+    "price": 249.00,
+    "attributes": {
+      "color": "Signal Orange",
+      "material": "Gore-Tex Paclite / Silicone Nylon Floor",
+      "waterproof": true,
+      "weight_oz": 12.3,
+      "seasons": ["4-season", "winter"],
+      "length_ft": 7.0,
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in clean, dry condition. Bivies used in an emergency are not eligible."
+  },
+  {
+    "id": "PROD-037",
+    "name": "Voyager Inflatable Paddle Board",
+    "category": "Paddling",
+    "description": "The Voyager Inflatable Stand-Up Paddle Board is constructed from military-grade dual-layer PVC drop-stitch technology that makes the board rigid enough to rival hardboards at 15 PSI. At 10'6\" × 33\" × 6\", it suits paddlers up to 115 kg across flat water, lakes, and gentle river currents. The non-slip EVA deck pad runs 80% of the board length. Three removable FCS fins and a centre permanent fin provide tracking and stability options. Includes high-pressure dual-action pump, adjustable aluminium paddle, leash, and a wheeled travel bag. Inflates in under 10 minutes. Deflates and rolls for storage in a car boot.",
+    "price": 699.00,
+    "attributes": {
+      "color": "Teal / White",
+      "material": "Dual-Layer Drop-Stitch PVC",
+      "waterproof": true,
+      "weight_oz": 352.0,
+      "sport": "Paddling",
+      "terrain": "Flatwater"
+    },
+    "return_policy": "14-day returns on uninflated boards only. Once inflated, only manufacturing defects qualify for return within 2 years."
+  },
+  {
+    "id": "PROD-038",
+    "name": "Summit Seeker Approach Shoes",
+    "category": "Footwear",
+    "description": "The Summit Seeker Approach Shoes bridge the gap between a trail runner and a climbing shoe, offering precision edging on friction slabs and durability on long hikes to the crag. The Stealth C4 rubber rand extends up the toe and outer edges for technical moves on stone. A DWR-treated canvas upper sheds moisture on dewy morning approaches. The lace-to-toe system allows the shoe to be cranked down tight for technical climbing or loosened for hiking comfort. Internal stiffener plate provides support on talus. Low-profile design. Recommended for 5.easy to 5.10 rock.",
+    "price": 135.00,
+    "attributes": {
+      "color": "Sage Green / Gray",
+      "material": "Canvas / Stealth C4 Rubber",
+      "waterproof": false,
+      "weight_oz": 14.1,
+      "gender": "Unisex",
+      "sizes": ["7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "12"],
+      "terrain": "Approach"
+    },
+    "return_policy": "30-day returns in unworn condition. Rubber rand shoes showing any rock-friction wear cannot be returned."
+  },
+  {
+    "id": "PROD-039",
+    "name": "ThermoMug Insulated Travel Mug 16oz",
+    "category": "Hydration",
+    "description": "The ThermoMug Insulated Travel Mug uses vacuum double-wall construction in 18/8 stainless steel to keep drinks hot for 6 hours and cold for 12. The powder-coated exterior provides grip and protects against denting. A BPA-free push-button sip lid has a locking mechanism to prevent accidental opening in a pack lid pocket. The flat base is sized to fit in standard bicycle bottle cages and car cup holders. Interior is smooth and easy to clean — no crevices for mould. Comes in eight colour options. 16 oz capacity. Dishwasher safe (lid hand-wash only).",
+    "price": 29.95,
+    "attributes": {
+      "color": "Matte Black",
+      "material": "18/8 Stainless Steel",
+      "waterproof": true,
+      "weight_oz": 12.8,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns in original clean condition. Lifetime warranty against manufacturing defects."
+  },
+  {
+    "id": "PROD-040",
+    "name": "ArcticLayer Primaloft Jacket",
+    "category": "Apparel",
+    "description": "The ArcticLayer Primaloft Jacket uses 60 g/m² Primaloft Gold Insulation Active, a synthetic fill that retains 95% of its insulating value when wet and dries rapidly once back indoors. The quilted channel construction prevents cold spots between baffles. A DWR-coated ripstop face fabric adds a first line of water defence. Two hand pockets and one internal drop-in pocket. Elasticated cuffs and a drawcord hem seal in warmth. The jacket packs into its left chest pocket via a stuff-it pocket design. An ideal synthetic alternative for climbers in high-humidity environments where down lofts poorly.",
+    "price": 199.00,
+    "attributes": {
+      "color": "Steel Blue",
+      "material": "Primaloft Gold Active 60g / 20D Ripstop Nylon",
+      "waterproof": false,
+      "weight_oz": 13.9,
+      "gender": "Women's",
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "fit": "Regular",
+      "insulation": "Synthetic",
+      "temp_rating": "20°F"
+    },
+    "return_policy": "30-day returns in original dry condition. Items used as an active insulation layer in wet conditions may show performance changes that do not qualify as defects."
+  },
+  {
+    "id": "PROD-041",
+    "name": "TrailMix Sport Sunscreen SPF 50",
+    "category": "Accessories",
+    "description": "TrailMix Sport Sunscreen SPF 50 is a mineral-based, reef-safe sun protection formulated for high-output outdoor use. Non-greasy zinc oxide formula provides broad-spectrum UVA/UVB protection and stays put through two hours of water immersion. Antioxidant-rich aloe vera and vitamin E base soothes post-exposure skin. The 3 oz squeeze tube fits in any pants pocket or pack hipbelt. No fragrance, no parabens. Safe for use in marine environments and national parks with chemical sunscreen restrictions. Dermatologist tested. Suitable for all skin types.",
+    "price": 16.95,
+    "attributes": {
+      "color": "White",
+      "material": "Zinc Oxide Mineral Base",
+      "waterproof": true,
+      "weight_oz": 3.5,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns on sealed items only. Opened personal care products cannot be returned for hygiene reasons."
+  },
+  {
+    "id": "PROD-042",
+    "name": "PhoenixDown Sleeping Bag 0°F",
+    "category": "Camping",
+    "description": "The PhoenixDown Sleeping Bag is rated to 0°F for cold mountaineering objectives and winter camping. Filled with 850-fill-power certified recycled down, it achieves exceptional warmth in a mummy silhouette that eliminates dead air around the legs and feet. The differential-cut inner shell maintains full loft at high-contact pressure points on the shoulders and hips. Double-layer footbox construction adds extra insulation where heat loss is greatest. Snap-in liner compatible. Full length two-way zipper allows temperature regulation. Includes compression sack. EN 13537 certified.",
+    "price": 529.00,
+    "attributes": {
+      "color": "Electric Blue / Black",
+      "material": "850-Fill Recycled Down / 15D Nylon Shell",
+      "waterproof": false,
+      "weight_oz": 42.0,
+      "temp_rating": "0°F",
+      "length_ft": 6.5,
+      "gender": "Women's"
+    },
+    "return_policy": "60-day returns in original dry compression-sacked condition. Warranty covers fill failures for 5 years."
+  },
+  {
+    "id": "PROD-043",
+    "name": "VortexLite Packable Wind Jacket",
+    "category": "Apparel",
+    "description": "The VortexLite Packable Wind Jacket is a stripped-down wind and light-rain barrier aimed at trail runners, cyclists, and commuters who want protection without feeling encumbered. The 20D ripstop nylon shell provides effective windproofing to 50 mph while remaining as breathable as a loose-mesh layer during aerobic efforts. Taped critical seams block rain infiltration on the shoulders and chest. Packable hood with single-hand adjustment. Thumb holes at cuffs. Two side seam pockets double as the stuff sack. Weight: 3.5 oz. Fully PFAS-free DWR. Available in regular and tall cuts.",
+    "price": 99.00,
+    "attributes": {
+      "color": "Electric Lime",
+      "material": "20D Ripstop Nylon",
+      "waterproof": false,
+      "weight_oz": 3.5,
+      "gender": "Men's",
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "fit": "Regular",
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns in original condition. Stuff-pocket seal must be intact."
+  },
+  {
+    "id": "PROD-044",
+    "name": "BioLite CampStove 2+",
+    "category": "Cooking",
+    "description": "The BioLite CampStove 2+ burns twigs, pinecones, and biomass collected at the campsite, eliminating the need to carry fuel canisters. The thermoelectric generator converts heat from the fire into electricity, powering an internal fan for a smokeless flame and providing up to 3W of USB charging for phones, headlamps, and cameras. 5200 mAh internal battery stores excess electricity for charging after the fire is out. FlexLight LED illuminates the camp table after the fire dies. Dual LED dashboard shows charge level and fan speed. Compatible with the BioLite Grill, Portable Grill, and Bake attachment accessories. Fuel-free at home: canister adapter sold separately.",
+    "price": 149.95,
+    "attributes": {
+      "color": "Black / Orange",
+      "material": "Stainless Steel / ABS Plastic",
+      "waterproof": false,
+      "weight_oz": 33.6,
+      "gender": "Unisex",
+      "sport": "Camping"
+    },
+    "return_policy": "30-day returns in original packaging. Electronics warranty for 1 year. Biomass-stained items can still be returned if within 30 days."
+  },
+  {
+    "id": "PROD-045",
+    "name": "KombuTube Hydration Bladder 3L",
+    "category": "Hydration",
+    "description": "The KombuTube Hydration Bladder slides into any reservoir-compatible pack and delivers water hands-free via a 100 cm drink tube with a bite-and-sip valve. The 3-litre BPA-free TPU reservoir features a slide-seal top opening wide enough for easy cleaning and ice-cube loading. Internal anti-slosh baffle reduces water movement noise while running. A magnetic tube trap keeps the drinking tube accessible at the shoulder strap without bouncing. Includes a secondary port compatible with standard water filter threads for in-line filtration. Dishwasher-safe top shelf. Lifetime warranty against seam failures.",
+    "price": 34.95,
+    "attributes": {
+      "color": "Clear",
+      "material": "BPA-Free TPU",
+      "waterproof": true,
+      "weight_oz": 5.4,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns in sealed, unused condition. Used bladders cannot be returned for hygiene reasons. Defects covered by lifetime warranty."
+  },
+  {
+    "id": "PROD-046",
+    "name": "SkyRidge Hammock with Straps",
+    "category": "Camping",
+    "description": "The SkyRidge Hammock uses a breathable 70D ripstop nylon double-layer design that cradles you diagonally for a flat, comfortable sleep position. A triple-stitched central seam and 180 kg rated whoopie sling suspension system give you peace of mind at height. The included 3 m tree-friendly suspension straps (15 mm wide) protect bark and comply with Leave No Trace guidelines. Total hammock weighs 850 g including straps and stuff sack. Setup takes under 2 minutes with the integrated cam buckle system. Compatible with the SkyRidge Hammock Tarp and Bug Net for all-weather camping. Fits trees spaced 3–5 metres apart.",
+    "price": 79.95,
+    "attributes": {
+      "color": "Forest Green / Gray",
+      "material": "70D Ripstop Nylon",
+      "waterproof": false,
+      "weight_oz": 30.0,
+      "gender": "Unisex",
+      "sport": "Camping"
+    },
+    "return_policy": "30-day returns in unused, uncreased condition with original stuff sack. Life-safety straps must be unused."
+  },
+  {
+    "id": "PROD-047",
+    "name": "Apex Avalanche Airbag Pack 30L",
+    "category": "Packs & Bags",
+    "description": "The Apex Avalanche Airbag Pack 30L integrates a TwinBag airbag system that, when triggered, inflates two 75-litre balloons in 2.5 seconds to help keep the skier near the snow surface during an avalanche. The rechargeable electric fan trigger system requires no gas canisters, allowing air travel with the pack and easy activation even with mittens. The 30-litre main compartment has front access to the dedicated snowpack/airbag service area, separate wet and dry boot zones, a dedicated helmet carry, and diagonal ski carry. Avalanche rescue tool pocket contains probe, shovel blade, and shovel handle sleeve. RECCO reflector included.",
+    "price": 1149.00,
+    "attributes": {
+      "color": "Black / Red",
+      "material": "Ripstop Nylon / Airbag Nylon",
+      "waterproof": false,
+      "weight_oz": 112.0,
+      "capacity_L": 30,
+      "frame": "Internal",
+      "sport": "Skiing",
+      "gender": "Unisex"
+    },
+    "return_policy": "14-day returns on completely unused packs. Airbag packs that have been deployed or triggered cannot be returned. Annual airbag certification service required."
+  },
+  {
+    "id": "PROD-048",
+    "name": "ProTrace GPS Watch",
+    "category": "Electronics",
+    "description": "The ProTrace GPS Watch logs altitude, pace, heart rate, and route data via a built-in multi-constellation GPS/GLONASS/Galileo receiver, accurate to within 3 metres. The always-on transflective display is readable in direct sunlight without a backlight. Barometric altimeter and digital compass complete the navigation toolkit. Pre-loaded topographic maps for 50 countries. Battery life: 40 hours in GPS mode, 14 days in smartwatch mode. Wrist-based optical heart rate monitor and SpO2 sensor. 5 ATM water resistance. Breadcrumb back-to-start navigation. Compatible with ANT+ and Bluetooth sensors. 16 GB onboard storage for maps and music.",
+    "price": 449.00,
+    "attributes": {
+      "color": "Black / Carbon",
+      "material": "Fibre-Reinforced Polymer / Gorilla Glass",
+      "waterproof": true,
+      "weight_oz": 2.4,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns in original packaging with all accessories. Software-related issues covered under 1-year warranty. Strap damage is not covered."
+  },
+  {
+    "id": "PROD-049",
+    "name": "Canyon Cruiser Mountain Bike Helmet",
+    "category": "Cycling",
+    "description": "The Canyon Cruiser Mountain Bike Helmet exceeds MIPS liner technology with its own OmniShield rotational impact management system, which reduces rotational forces to the brain in oblique impacts by 40% compared to a non-rotational helmet. The EPS foam liner is surrounded by a reinforced polycarbonate micro-shell. Twenty-two ventilation channels are shaped to maintain airflow even on switchback climbs. A BOA Fit System Li2 dial provides micro-adjustable fit with one hand. The visor adjusts two positions and mounts a GoPro-compatible clip accessory. EN 1078 and ASTM F1952 certified. Available in S/M and L/XL.",
+    "price": 129.00,
+    "attributes": {
+      "color": "Matte Charcoal / Green",
+      "material": "EPS Foam / Polycarbonate Shell",
+      "waterproof": false,
+      "weight_oz": 11.2,
+      "gender": "Unisex",
+      "sizes": ["S/M", "L/XL"],
+      "sport": "Cycling"
+    },
+    "return_policy": "30-day returns in unused condition. Helmets showing any sign of impact cannot be returned or exchanged. Safety item warranty 1 year against manufacturing defects."
+  },
+  {
+    "id": "PROD-050",
+    "name": "TrailTech Gaiters Low",
+    "category": "Accessories",
+    "description": "The TrailTech Gaiters Low are low-cut trail gaiters designed to keep debris, pebbles, and mud out of your shoes on dusty and muddy singletrack without the bulk and heat of full-height gaiters. Stretchy Lycra/nylon blend body conforms to any boot or shoe, secured by an aluminium toe hook and an elastic back strap under the heel. The Velcro front closure self-seals — no zip to catch on brush. Silicone-coated bottom edge is scuff-resistant. Compatible with most trail running shoes and hiking boots. Machine washable. Sold as a pair. Weight: 38 g per pair.",
+    "price": 24.95,
+    "attributes": {
+      "color": "Black",
+      "material": "Lycra / Nylon / Silicone Edge",
+      "waterproof": false,
+      "weight_oz": 1.3,
+      "gender": "Unisex",
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns in original packaging. Must be unwashed and unworn on trail."
+  },
+  {
+    "id": "PROD-051",
+    "name": "Cascade Kayak Paddle 220cm",
+    "category": "Paddling",
+    "description": "The Cascade Kayak Paddle is a mid-range fibreglass touring paddle suited for recreational sea kayaking, lake touring, and calm river travel. At 220 cm, it suits kayakers 165–185 cm tall in boats 55–70 cm wide. Matched fibreglass blades are asymmetric and spooned for a flutter-free catch and efficient exit. The oval-profiled shaft is 30 mm in diameter with indexed feather offset positions at 0°, 30°, and 45° for right or left-hand control. The split ferrule joins at mid-shaft for compact travel or storage. Blade edge reinforcement protects against shallow-water rock contact. Weight: 870 g.",
+    "price": 179.00,
+    "attributes": {
+      "color": "Black / Blue Blades",
+      "material": "Fibreglass Shaft / Fibreglass Blades",
+      "waterproof": false,
+      "weight_oz": 30.7,
+      "sport": "Paddling",
+      "terrain": "Flatwater"
+    },
+    "return_policy": "30-day returns in original un-paddled condition. Paddles used in salt water must be rinsed before inspection."
+  },
+  {
+    "id": "PROD-052",
+    "name": "EcoSole Trail Running Shorts",
+    "category": "Apparel",
+    "description": "Made from 92% recycled polyester and 8% elastane, the EcoSole Trail Running Shorts deliver 4-way stretch freedom of motion on technical descents and fast flats. The 5-inch inseam is the sweet spot between modesty and unrestricted stride. Interior brief liner provides support without chafing. Two front zippered pockets and one rear zippered pocket store gels, phone, and key. Reflective trim on rear waistband and side seams. Laser-perforated side panels and inner liner ventilate during high-effort running. UPF 30+ protection. Machine wash cold, tumble dry low.",
+    "price": 64.95,
+    "attributes": {
+      "color": "Deep Navy",
+      "material": "92% Recycled Polyester / 8% Elastane",
+      "waterproof": false,
+      "weight_oz": 5.1,
+      "gender": "Men's",
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns in unwashed, unrun condition. Liner items must have original hygiene seal intact."
+  },
+  {
+    "id": "PROD-053",
+    "name": "PermFrost Insulated Gloves",
+    "category": "Accessories",
+    "description": "The PermFrost Insulated Gloves use a PrimaLoft Silver 80 g insert with stretch-woven nylon face fabric for warmth and dexterity down to 10°F. A Gore-Tex insert liner provides waterproofing without sacrificing breathability during high-output skinning and ski touring. Silicone gripper palm enables confident equipment handling even with wet gloves. Smartphone-compatible fingertips on the index finger and thumb. Pre-curved fingers reduce hand fatigue. Extended gauntlet cuff locks out snow when pole-planting. Available in XS–XL for men and women (see size chart for hand measurements).",
+    "price": 89.00,
+    "attributes": {
+      "color": "Black",
+      "material": "Stretch Nylon / Gore-Tex Insert / PrimaLoft Silver 80g",
+      "waterproof": true,
+      "weight_oz": 7.2,
+      "gender": "Unisex",
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "sport": "Skiing",
+      "temp_rating": "10°F"
+    },
+    "return_policy": "30-day returns in original condition with hangtag attached. Items must not show ski-pole strap wear or ski-related abrasion."
+  },
+  {
+    "id": "PROD-054",
+    "name": "WildCraft Hammock Rain Tarp",
+    "category": "Camping",
+    "description": "The WildCraft Hammock Rain Tarp stretches a 3.0 × 2.5 m footprint above your SkyRidge or compatible hammock, covering the entire hammock and its occupant even in blowing rain. The 40D ripstop silnylon fabric has a hydrostatic head of 3000 mm and sheds rain instantly without absorbing moisture. Eight edge tie-out points and two ridge-line tie-outs allow multiple pitch configurations from open cathedral to tight A-frame for full protection in storms. Guy lines, line-tighteners, and two stuff sacks included. Pole-compatible but poles not included. Weight: 530 g.",
+    "price": 89.00,
+    "attributes": {
+      "color": "Olive Drab",
+      "material": "40D Silnylon",
+      "waterproof": true,
+      "weight_oz": 18.7,
+      "seasons": ["3-season"],
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns in clean, unused condition. Tarps with stake holes or guy-line knot burns cannot be returned."
+  },
+  {
+    "id": "PROD-055",
+    "name": "BearGuard Canister",
+    "category": "Accessories",
+    "description": "The BearGuard Canister is a polycarbonate food container that meets IGBC and Yosemite National Park requirements for bear-resistant food storage without the need for hanging a bear bag. The smooth cylindrical exterior prevents bears from gaining a grip. The lid opens with a coin or carabiner but not with an animal's claws or teeth. Interior volume of 2.5 litres holds approximately 5 days of calorie-dense food for one person. The clear lid allows quick identification of contents. Smooth interior is odour-resistant and food-safe. Weight: 454 g. Stacks with second canister for group trips.",
+    "price": 74.95,
+    "attributes": {
+      "color": "Black / Clear Lid",
+      "material": "Polycarbonate",
+      "waterproof": true,
+      "weight_oz": 16.0,
+      "gender": "Unisex",
+      "sport": "Camping"
+    },
+    "return_policy": "30-day returns in clean, odour-free condition. Items with visible scratches or bear-contact damage are not eligible."
+  },
+  {
+    "id": "PROD-056",
+    "name": "HighAlt Altitude Tent 2P",
+    "category": "Camping",
+    "description": "The HighAlt Altitude Tent is engineered for 8000-metre objectives and extended base camp use in extreme cold and wind. The double-wall design uses two geodesic DAC Featherlite NFL poles and two crossing mid-poles to create a structure proven stable in 100 mph gusts. Outer fly material is 30D siliconised nylon with 10,000 mm waterproofing. Inner tent is 20D breathable nylon to minimise condensation. All seams are factory taped. Four-season snow-load rated design sheds heavy wet snowfall without collapse. Two doors and two vestibules allow both occupants to exit without disturbing each other. Interior volume: 2.8 m². Weight: 2.1 kg.",
+    "price": 799.00,
+    "attributes": {
+      "color": "Orange / Gray",
+      "material": "30D Siliconised Nylon / DAC Featherlite NFL Poles",
+      "waterproof": true,
+      "weight_oz": 74.1,
+      "seasons": ["4-season", "winter"],
+      "pole_count": 4,
+      "capacity_L": 2
+    },
+    "return_policy": "60-day returns in original packaging. Tent must be clean and dry. All components (poles, stakes, fly, inner) must be included."
+  },
+  {
+    "id": "PROD-057",
+    "name": "SpeedHike Carbon Fibre Poles",
+    "category": "Trekking Poles",
+    "description": "The SpeedHike Carbon Fibre Poles use a 3-section telescoping design with a simple Speed Lock external lever mechanism. Adjust length from 100 to 140 cm without tools; the lever locks solidly with an audible click. Carbon fibre shafts absorb trail vibration and weigh 195 g each. Comfortable foam grip with extended soft-touch lower section handles varied hand placements on steep terrain. Wrist straps are padded EVA foam. Tungsten carbide tips — the hardest tip material available — outlast standard carbide by 3× on abrasive granite. Supplied with trekking baskets and snow baskets. Available in green and gunmetal.",
+    "price": 159.00,
+    "attributes": {
+      "color": "Carbon / Green",
+      "material": "Full Carbon Fibre / Tungsten Carbide Tips",
+      "weight_oz": 13.8,
+      "pole_count": 2,
+      "gender": "Unisex"
+    },
+    "return_policy": "30-day returns with all included accessories. Carbon poles with impact damage or delamination are not eligible."
+  },
+  {
+    "id": "PROD-058",
+    "name": "OmniDry Waterproof Backpack Cover",
+    "category": "Accessories",
+    "description": "The OmniDry Waterproof Backpack Cover is made from 70D ripstop nylon with a polyurethane coating that provides 5000 mm waterproofing. Elasticated hem bead threads through a channel around the perimeter for a snug fit over packs from 20 to 80 litres (size M fits 20–45 L; size L fits 45–80 L). High-visibility colour makes you visible on the trail in low light and fog. Reflective strip on rear panel adds driver visibility on road sections. Weighs 80 g and stuffs into its own internal pocket. Quick to don mid-storm without stopping. Also protects against dust, UV fade, and bird droppings.",
+    "price": 19.95,
+    "attributes": {
+      "color": "Safety Orange",
+      "material": "70D Ripstop Nylon / PU Coating",
+      "waterproof": true,
+      "weight_oz": 2.8,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns in original condition. Items washed or noticeably used outdoors are not eligible."
+  },
+  {
+    "id": "PROD-059",
+    "name": "PeakPerformance Running Hat",
+    "category": "Accessories",
+    "description": "The PeakPerformance Running Hat features a lightweight, moisture-wicking 100% polyester crown and a stiffened brim that provides UV protection in the eyes and on the nose. The sweat-wicking headband pulls perspiration away from the forehead during intense efforts. Adjustable rear strap accommodates heads 54–62 cm. Mesh side panels ventilate the crown in warm weather. Reflective logo on the brim and rear clip. Machine washable without losing shape (air dry recommended). Available in eight colourways including high-visibility options. UPF 30+ certification.",
+    "price": 29.95,
+    "attributes": {
+      "color": "Royal Blue",
+      "material": "100% Polyester",
+      "waterproof": false,
+      "weight_oz": 2.1,
+      "gender": "Unisex",
+      "sport": "Running"
+    },
+    "return_policy": "30-day returns in unworn condition with original packaging. Headwear items must not be washed before return."
+  },
+  {
+    "id": "PROD-060",
+    "name": "ProBivouac Emergency Shelter",
+    "category": "Camping",
+    "description": "The ProBivouac Emergency Shelter is a two-person reflective mylar tube tent that weighs just 200 g and packs smaller than a fist. The aluminised polyester film reflects up to 90% of body heat back to occupants, providing critical warmth in cold emergencies. The tube design is open at both ends for ventilation and can be entered from either side. The bright orange exterior makes the shelter visible from the air for search-and-rescue operations. Includes 5 m of high-strength paracord to rig between two trees or stake points. Single-use design (for emergency) or can be used for lightweight bikepacking. Meets ANSI 107-2020 high visibility standards.",
+    "price": 14.95,
+    "attributes": {
+      "color": "Reflective Silver / Orange",
+      "material": "Aluminised Polyester Mylar",
+      "waterproof": true,
+      "weight_oz": 7.1,
+      "gender": "Unisex",
+      "sport": "Hiking"
+    },
+    "return_policy": "30-day returns in sealed packaging. Once opened, emergency shelters are non-returnable for safety reasons."
+  }
+]
