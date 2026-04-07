@@ -67,7 +67,7 @@ SYSTEM_PROMPT = (
 # ---------------------------------------------------------------------------
 
 def embed(text: str) -> list[float]:
-    """Call Bedrock Titan Embed Text v2 and return a 1 536-dim vector."""
+    """Call Bedrock Titan Embed Text v2 and return a 1536-dim vector."""
     body = json.dumps(
         {
             "inputText": text,

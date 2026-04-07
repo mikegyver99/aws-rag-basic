@@ -188,11 +188,21 @@ resource "aws_api_gateway_stage" "rag" {
   stage_name    = var.api_stage_name
 
   access_log_destination_arn = aws_cloudwatch_log_group.apigw.arn
+}
 
-  default_route_settings {
-    # throttling for cost protection
-    throttling_burst_limit = 50
-    throttling_rate_limit  = 20
+# Throttling for cost protection — applied via a usage plan on the stage
+resource "aws_api_gateway_usage_plan" "rag" {
+  name        = "${local.prefix}-usage-plan"
+  description = "Default throttle limits for ${local.prefix}"
+
+  api_stages {
+    api_id = aws_api_gateway_rest_api.rag.id
+    stage  = aws_api_gateway_stage.rag.stage_name
+  }
+
+  throttle_settings {
+    burst_limit = 50
+    rate_limit  = 20
   }
 }
 
