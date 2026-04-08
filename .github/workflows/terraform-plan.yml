@@ -63,7 +63,6 @@ jobs:
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
         run: |
           terraform plan -out=plan.tfplan
-          terraform show -no-color plan.tfplan
 
       - name: Upload plan artifact
         uses: actions/upload-artifact@v4

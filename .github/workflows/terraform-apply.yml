@@ -71,4 +71,5 @@ jobs:
             ls -la ../../environments || true
             exit 1
           fi
+          terraform show -no-color plan.tfplan
           terraform apply -input=false plan.tfplan
