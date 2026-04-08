@@ -36,8 +36,6 @@ jobs:
           sudo apt-get update && sudo apt-get install -y gettext-base
           echo "Rendering environments/${ENVIRONMENT}/backend.conf -> environments/${ENVIRONMENT}/backend.rendered.conf"
           envsubst < environments/${ENVIRONMENT}/backend.conf > environments/${ENVIRONMENT}/backend.rendered.conf
-          echo "Rendered file contents:"
-          ls -la environments/${ENVIRONMENT} || true
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2

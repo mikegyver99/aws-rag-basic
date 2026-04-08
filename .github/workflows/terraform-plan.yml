@@ -34,8 +34,6 @@ jobs:
           sudo apt-get update && sudo apt-get install -y gettext-base
           echo "Rendering environments/${ENVIRONMENT}/backend.conf -> environments/${ENVIRONMENT}/backend.rendered.conf"
           envsubst < environments/${ENVIRONMENT}/backend.conf > environments/${ENVIRONMENT}/backend.rendered.conf
-          echo "Rendered file contents:"
-          ls -la environments/${ENVIRONMENT} || true
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -55,7 +53,6 @@ jobs:
         env:
           ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: |
-          ls -la || true
           terraform init -backend-config=backend.rendered.conf
 
       - name: Terraform Format Check
@@ -64,7 +61,9 @@ jobs:
 
       - name: Terraform Plan
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
-        run: terraform plan -out=plan.tfplan
+        run: |
+          terraform plan -out=plan.tfplan
+          terraform show -no-color plan.tfplan
 
       - name: Upload plan artifact
         uses: actions/upload-artifact@v4
