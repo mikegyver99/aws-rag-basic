@@ -70,7 +70,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v6
         with:
           workflow: terraform-plan.yml # The name or filename of your plan workflow
-          name: tfplan
+          name: tfplan-${{ github.event.inputs.environment || 'dev' }}
           path: environments/${{ github.event.inputs.environment || 'dev' }}/
           # Optional: ensure you get the artifact from the PR or Branch that triggered this
           branch: ${{ github.event.pull_request.head.ref || github.ref_name }} 
