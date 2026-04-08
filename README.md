@@ -74,6 +74,22 @@ The workflows expect these repository secrets to be configured:
 - `TF_BACKEND_KEY` (e.g. `aws-rag-basic/environments/dev/terraform.tfstate`)
 - `TF_BACKEND_REGION`
 - `TF_BACKEND_DYNAMODB_TABLE`
+- `AWS_ACCOUNT`
 
 Example: open the Actions tab in GitHub, run `Terraform Plan` from a pull request or run the `Terraform Apply (manual)` workflow and set `approve` to `yes` to deploy.
+
+### CI / backend rendering
+
+The workflows automatically render `environments/dev/backend.conf` before running `terraform init`. They use `envsubst` to substitute the `${ACCOUNT}` placeholder from a secret named `AWS_ACCOUNT` in your repository or environment.
+
+Required CI secrets for rendering and backend initialization:
+
+- `AWS_ACCOUNT` — account identifier used in bucket/table names.
+- `TF_BACKEND_BUCKET`, `TF_BACKEND_REGION`, `TF_BACKEND_DYNAMODB_TABLE` — optional; when present they are used by workflows or can be left blank if using the rendered backend file.
+
+Notes and recommended workflow:
+
+- Add `AWS_ACCOUNT` (or set it at org/repository level) so the backend config renders correctly.
+- The pipeline installs `gettext-base` to provide `envsubst`; this is safe and small. If you prefer not to install packages, replace the rendering step with `sed` substitutions.
+- Keep the bootstrap resources (S3 bucket and DynamoDB table) created before switching to the remote backend. Use the `bootstrap/` workflow or run the commands in the Bootstrapping section.
 
