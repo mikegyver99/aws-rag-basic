@@ -51,7 +51,7 @@ jobs:
         env:
           ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: |
-          terraform init -backend-config=../environments/${ENVIRONMENT}/backend.rendered.conf
+          terraform init -backend-config=backend.rendered.conf
 
       - name: Terraform Format Check
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
