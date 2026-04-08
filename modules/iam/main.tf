@@ -1,21 +1,3 @@
-variable "prefix" {
-  description = "Resource name prefix"
-  type        = string
-}
-
-variable "region" {
-  description = "AWS region"
-  type        = string
-}
-
-variable "embed_model_id" {
-  type = string
-}
-
-variable "claude_model_id" {
-  type = string
-}
-
 resource "aws_iam_role" "ingest_lambda" {
   name = "${var.prefix}-ingest-lambda-role"
 
