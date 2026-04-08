@@ -17,13 +17,15 @@
 
 terraform {
   backend "s3" {
-    # Fill these values with the outputs from `bootstrap/` after running it.
-    # Example bucket name produced by bootstrap: mikegyver99-aws-rag-basic-terraform-state-<ACCOUNT>-<REGION>
-    bucket         = "mikegyver99-aws-rag-basic-terraform-state-<ACCOUNT>-<REGION>"
+    # Replace <ACCOUNT> with your AWS account ID after running `bootstrap/`.
+    # The bootstrap outputs include the concrete names; this file uses the
+    # same naming pattern and pre-fills the default region from
+    # `terraform/variables.tf` (us-east-1).
+    bucket         = "mikegyver99-aws-rag-basic-terraform-state-<ACCOUNT>-us-east-1"
     key            = "aws-rag-basic/terraform.tfstate"
-    region         = "<REGION>"
-    # Example lock table: mikegyver99-aws-rag-basic-terraform-lock-<ACCOUNT>-<REGION>
-    dynamodb_table = "mikegyver99-aws-rag-basic-terraform-lock-<ACCOUNT>-<REGION>"
+    region         = "us-east-1"
+    # DynamoDB lock table follows the same pattern
+    dynamodb_table = "mikegyver99-aws-rag-basic-terraform-lock-<ACCOUNT>-us-east-1"
     encrypt        = true
   }
 }
