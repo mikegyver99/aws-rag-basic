@@ -85,4 +85,4 @@ jobs:
             exit 1
           fi
           terraform show -no-color plan.tfplan
-          terraform apply -input=false plan.tfplan
+          terraform apply -input=false plan.tfplan -backend-config=backend.rendered.conf
