@@ -12,7 +12,6 @@ locals {
 
 resource "aws_s3_bucket" "tfstate" {
   bucket = local.bucket_name
-  acl    = "private"
 
   versioning {
     enabled = true
@@ -28,6 +27,14 @@ resource "aws_s3_bucket" "tfstate" {
 
   tags = {
     Name = "terraform-state"
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "tfstate" {
+  bucket = aws_s3_bucket.tfstate.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
   }
 }
 
