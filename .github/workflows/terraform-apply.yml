@@ -56,4 +56,5 @@ jobs:
           terraform init -backend-config=../environments/${ENVIRONMENT}/backend.rendered.conf
 
       - name: Terraform Apply
+        working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
         run: terraform apply -auto-approve
