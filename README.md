@@ -9,15 +9,18 @@ Before running `terraform init` with a remote backend you must create the S3 buc
 
 ```bash
 aws s3api create-bucket \
-	--bucket YOUR_BUCKET_NAME \
-	--region us-west-2 \
-	--create-bucket-configuration LocationConstraint=us-west-2
+  --bucket YOUR_BUCKET_NAME-REGION-an \
+  --bucket-namespace account-regional \
+  --region us-west-2 \
+  --create-bucket-configuration LocationConstraint=us-west-2 \
+  --profile <myprofile>
+
 
 # Recommended: enable versioning
-aws s3api put-bucket-versioning --bucket YOUR_BUCKET_NAME --versioning-configuration Status=Enabled
+aws s3api put-bucket-versioning --bucket YOUR_BUCKET_NAME-REGION-an --versioning-configuration Status=Enabled
 
 # Recommended: enable default server-side encryption (SSE-S3)
-aws s3api put-bucket-encryption --bucket YOUR_BUCKET_NAME \
+aws s3api put-bucket-encryption --bucket YOUR_BUCKET_NAME-REGION-an \
 	--server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'
 ```
 
@@ -32,7 +35,7 @@ aws dynamodb create-table \
 ```
 
 Notes:
-- Replace `YOUR_BUCKET_NAME` and `YOUR_LOCK_TABLE` with your chosen names.
+- Replace `YOUR_BUCKET_NAME-REGION-an` and `YOUR_LOCK_TABLE` with your chosen names.
 - Ensure the IAM identity you use for Terraform has permissions to read/write the S3 bucket and to put/get/delete items in the DynamoDB table.
 - Enable bucket versioning and server-side encryption for safer state handling.
 

@@ -6,13 +6,16 @@ data "aws_caller_identity" "current" {}
 
 locals {
   account_region = "${data.aws_caller_identity.current.account_id}-${var.region}"
-  bucket_name    = "mikegyver99-aws-rag-basic-terraform-state-${local.account_region}"
-  lock_table     = "mikegyver99-aws-rag-basic-terraform-lock-${local.account_region}"
+  bucket_name    = "YOUR_BUCKET_NAME-${local.account_region}-an"
+  lock_table     = "YOUR_LOCK_TABLE-${local.account_region}"
 }
 
 resource "aws_s3_bucket" "tfstate" {
-  bucket = local.bucket_name
-
+# The prefix you want to use
+  bucket_prefix = local.bucket_name
+  
+  # This flag tells AWS to use the account-regional namespace
+  bucket_namespace = "account-regional"
   versioning {
     enabled = true
   }
