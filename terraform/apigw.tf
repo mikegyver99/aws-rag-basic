@@ -187,7 +187,12 @@ resource "aws_api_gateway_stage" "rag" {
   deployment_id = aws_api_gateway_deployment.rag.id
   stage_name    = var.api_stage_name
 
-  access_log_destination_arn = aws_cloudwatch_log_group.apigw.arn
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.apigw.arn
+    format = <<EOF
+{"requestId":"$context.requestId","ip":"$context.identity.sourceIp","caller":"$context.identity.caller","user":"$context.identity.user","requestTime":"$context.requestTime","httpMethod":"$context.httpMethod","resourcePath":"$context.resourcePath","status":"$context.status","protocol":"$context.protocol"}
+EOF
+  }
 }
 
 # Throttling for cost protection — applied via a usage plan on the stage
