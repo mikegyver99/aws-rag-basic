@@ -26,13 +26,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Render backend config
+        env:
+          ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext-base
+          envsubst < environments/dev/backend.conf > environments/dev/backend.rendered.conf
+
       - name: Init Terraform
         run: |
-          terraform init \
-            -backend-config="bucket=${{ secrets.TF_BACKEND_BUCKET }}" \
-            -backend-config="key=${{ secrets.TF_BACKEND_KEY || 'aws-rag-basic/environments/dev/terraform.tfstate' }}" \
-            -backend-config="region=${{ secrets.TF_BACKEND_REGION }}" \
-            -backend-config="dynamodb_table=${{ secrets.TF_BACKEND_DYNAMODB_TABLE }}"
+          terraform init -backend-config=environments/dev/backend.rendered.conf
 
       - name: Terraform Format Check
         run: terraform fmt -check
