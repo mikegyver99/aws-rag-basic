@@ -10,17 +10,17 @@ module "s3_data" {
 }
 
 module "s3_ui" {
-  source = "../../modules/s3"
-  name   = "${var.project_name}-${var.environment}-ui"
+  source        = "../../modules/s3"
+  name          = "${var.project_name}-${var.environment}-ui"
   force_destroy = true
 }
 
 module "apigw" {
-  source = "../../modules/apigw"
-  prefix = "${var.project_name}-${var.environment}"
-  api_stage_name = var.api_stage_name
+  source            = "../../modules/apigw"
+  prefix            = "${var.project_name}-${var.environment}"
+  api_stage_name    = var.api_stage_name
   ingest_lambda_arn = module.lambda.ingest_function_invoke_arn
-  query_lambda_arn = module.lambda.query_function_invoke_arn
+  query_lambda_arn  = module.lambda.query_function_invoke_arn
 }
 
 module "iam" {
@@ -30,30 +30,30 @@ module "iam" {
 }
 
 module "opensearch" {
-  source = "../../modules/opensearch"
-  prefix = "${var.project_name}-${var.environment}"
+  source          = "../../modules/opensearch"
+  prefix          = "${var.project_name}-${var.environment}"
   collection_name = var.opensearch_collection_name
 }
 
 module "lambda" {
-  source = "../../modules/lambda"
-  prefix = "${var.project_name}-${var.environment}"
-  ingest_source_dir = "${path.root}/../../lambdas/ingest"
-  query_source_dir  = "${path.root}/../../lambdas/query"
-  ingest_role_arn   = module.iam.ingest_role_arn
-  query_role_arn    = module.iam.query_role_arn
-  lambda_memory_mb  = 512
+  source             = "../../modules/lambda"
+  prefix             = "${var.project_name}-${var.environment}"
+  ingest_source_dir  = "${path.root}/../../lambdas/ingest"
+  query_source_dir   = "${path.root}/../../lambdas/query"
+  ingest_role_arn    = module.iam.ingest_role_arn
+  query_role_arn     = module.iam.query_role_arn
+  lambda_memory_mb   = 512
   lambda_timeout_sec = 60
   common_lambda_env = {
     OPENSEARCH_ENDPOINT = module.opensearch.collection_endpoint
-    INDEX_NAME = var.opensearch_index_name
+    INDEX_NAME          = var.opensearch_index_name
   }
   claude_model_id = var.claude_model_id
 }
 
 module "cloudfront" {
-  source = "../../modules/cloudfront"
-  prefix = "${var.project_name}-${var.environment}"
+  source        = "../../modules/cloudfront"
+  prefix        = "${var.project_name}-${var.environment}"
   ui_bucket_arn = module.s3_ui.bucket_arn
-  price_class = var.cloudfront_price_class
+  price_class   = var.cloudfront_price_class
 }
