@@ -28,7 +28,7 @@ INDEX_NAME = os.environ.get("INDEX_NAME", "products")
 EMBED_MODEL_ID = os.environ.get("EMBED_MODEL_ID", "amazon.titan-embed-text-v2:0")
 CLAUDE_MODEL_ID = os.environ.get("CLAUDE_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0")
 TOP_K = int(os.environ.get("TOP_K", "5"))
-REGION = os.environ.get("AWS_REGION", "us-east-1")
+REGION = os.environ.get("AWS_REGION", "us-west-2")
 
 # ---------------------------------------------------------------------------
 # AWS clients

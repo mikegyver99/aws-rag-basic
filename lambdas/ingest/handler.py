@@ -28,11 +28,11 @@ logger.setLevel(logging.INFO)
 # ---------------------------------------------------------------------------
 # Environment variables (set by Terraform)
 # ---------------------------------------------------------------------------
-OPENSEARCH_ENDPOINT = os.environ["OPENSEARCH_ENDPOINT"]  # e.g. https://xxx.us-east-1.aoss.amazonaws.com
+OPENSEARCH_ENDPOINT = os.environ["OPENSEARCH_ENDPOINT"]  # e.g. https://xxx.us-west-2.aoss.amazonaws.com
 INDEX_NAME = os.environ.get("INDEX_NAME", "products")
 EMBED_MODEL_ID = os.environ.get("EMBED_MODEL_ID", "amazon.titan-embed-text-v2:0")
 CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", "400"))   # approximate tokens per chunk
-REGION = os.environ.get("AWS_REGION", "us-east-1")
+REGION = os.environ.get("AWS_REGION", "us-west-2")
 DATA_BUCKET = os.environ.get("DATA_BUCKET", "")
 
 # ---------------------------------------------------------------------------

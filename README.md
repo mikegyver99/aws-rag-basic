@@ -10,8 +10,8 @@ Before running `terraform init` with a remote backend you must create the S3 buc
 ```bash
 aws s3api create-bucket \
 	--bucket YOUR_BUCKET_NAME \
-	--region us-east-1 \
-	--create-bucket-configuration LocationConstraint=us-east-1
+	--region us-west-2 \
+	--create-bucket-configuration LocationConstraint=us-west-2
 
 # Recommended: enable versioning
 aws s3api put-bucket-versioning --bucket YOUR_BUCKET_NAME --versioning-configuration Status=Enabled
@@ -53,7 +53,7 @@ Example (from `environments/dev`):
 terraform init \
 	-backend-config="bucket=your-terraform-state-bucket" \
 	-backend-config="key=aws-rag-basic/environments/dev/terraform.tfstate" \
-	-backend-config="region=us-east-1" \
+	-backend-config="region=us-west-2" \
 	-backend-config="dynamodb_table=your-lock-table"
 ```
 ## GitHub Actions CI
@@ -68,7 +68,7 @@ The workflows expect these repository secrets to be configured:
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 - `AWS_REGION`
 - `TF_BACKEND_BUCKET`
-- `TF_BACKEND_KEY` (e.g. `aws-rag-basic/terraform.tfstate`)
+- `TF_BACKEND_KEY` (e.g. `aws-rag-basic/environments/dev/terraform.tfstate`)
 - `TF_BACKEND_REGION`
 - `TF_BACKEND_DYNAMODB_TABLE`
 
