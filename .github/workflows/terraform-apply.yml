@@ -59,17 +59,21 @@ jobs:
 
       - name: Download plan artifact
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: tfplan
-          path: .
+          path: environments/${{ github.event.inputs.environment || 'dev' }}
 
-      - name: Terraform Apply (from plan)
+      - name: Terraform Apply (require plan)
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
         run: |
+          set -euo pipefail
           if [ ! -f plan.tfplan ]; then
             echo "Plan file not found in working directory: $(pwd)" >&2
-            ls -la ../../environments || true
+            echo "Ensure the 'Terraform Plan' workflow ran and uploaded the 'tfplan' artifact for environment '${{ github.event.inputs.environment || 'dev' }}'." >&2
+            ls -la || true
             exit 1
           fi
+          echo "Using downloaded plan file: $(pwd)/plan.tfplan"
           terraform show -no-color plan.tfplan
           terraform apply -input=false plan.tfplan
