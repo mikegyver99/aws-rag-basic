@@ -17,11 +17,13 @@
 
 terraform {
   backend "s3" {
-    # Replace these placeholder values OR run `terraform init -backend-config=...`
-    bucket         = "YOUR_TFSTATE_BUCKET"
-    key            = "terraform/state.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "YOUR_DYNAMODB_LOCK_TABLE"
+    # Fill these values with the outputs from `bootstrap/` after running it.
+    # Example bucket name produced by bootstrap: mikegyver99-aws-rag-basic-terraform-state-<ACCOUNT>-<REGION>
+    bucket         = "mikegyver99-aws-rag-basic-terraform-state-<ACCOUNT>-<REGION>"
+    key            = "aws-rag-basic/terraform.tfstate"
+    region         = "<REGION>"
+    # Example lock table: mikegyver99-aws-rag-basic-terraform-lock-<ACCOUNT>-<REGION>
+    dynamodb_table = "mikegyver99-aws-rag-basic-terraform-lock-<ACCOUNT>-<REGION>"
     encrypt        = true
   }
 }
