@@ -62,7 +62,7 @@ jobs:
         with:
           workflow: terraform-plan.yml # The name or filename of your plan workflow
           name: tfplan
-          path: .
+          path: environments/${{ github.event.inputs.environment || 'dev' }}/
           # Optional: ensure you get the artifact from the PR or Branch that triggered this
           branch: ${{ github.event.pull_request.head.ref || github.ref_name }} 
           workflow_conclusion: success
@@ -72,7 +72,7 @@ jobs:
         run: |
           if [ ! -f plan.tfplan ]; then
             echo "Plan file not found in working directory: $(pwd)" >&2
-            ls -la ../../environments || true
+            ls -la ../../environments/* || true
             exit 1
           fi
           terraform show -no-color plan.tfplan
