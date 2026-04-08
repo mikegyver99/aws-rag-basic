@@ -93,3 +93,9 @@ Notes and recommended workflow:
 - The pipeline installs `gettext-base` to provide `envsubst`; this is safe and small. If you prefer not to install packages, replace the rendering step with `sed` substitutions.
 - Keep the bootstrap resources (S3 bucket and DynamoDB table) created before switching to the remote backend. Use the `bootstrap/` workflow or run the commands in the Bootstrapping section.
 
+### Environment secrets & approvals
+
+- Jobs must set `environment:` (for example `environment: dev`) to access GitHub Environment-scoped secrets; inputs named `environment` alone do not expose those secrets.
+- Create environment secrets under Repository Settings → Environments → <environment> → Secrets. These secrets are injected only when a job is assigned to that environment.
+- Environments may enforce protection rules (required reviewers or approval). When enabled, workflows will pause and wait for approval before the job runs.
+
