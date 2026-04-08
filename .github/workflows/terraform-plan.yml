@@ -47,8 +47,10 @@ jobs:
 
       - name: Init Terraform
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: |
-          terraform init -backend-config=../${{ 'environments/' + (github.event.inputs.environment || 'dev') + '/backend.rendered.conf' }}
+          terraform init -backend-config=../environments/${ENVIRONMENT}/backend.rendered.conf
 
       - name: Terraform Format Check
         run: terraform fmt -check
