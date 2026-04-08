@@ -16,6 +16,7 @@ jobs:
   apply:
     name: Terraform Apply
     if: ${{ github.event.inputs.approve == 'yes' }}
+    environment: ${{ github.event.inputs.environment || 'dev' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

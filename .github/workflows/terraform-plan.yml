@@ -14,6 +14,7 @@ on:
 jobs:
   plan:
     name: Terraform Plan
+    environment: ${{ github.event.inputs.environment || 'dev' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
