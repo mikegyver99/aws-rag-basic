@@ -48,6 +48,16 @@ jobs:
           ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: echo "Using environment=$ENVIRONMENT"
 
+      - name: Build lambda zips
+        run: |
+          set -euo pipefail
+          sudo apt-get update && sudo apt-get install -y zip
+          mkdir -p modules/lambda/.build
+          echo "Creating ingest zip..."
+          (cd lambdas/ingest && zip -r "${{ github.workspace }}/modules/lambda/.build/ingest.zip" .)
+          echo "Creating query zip..."
+          (cd lambdas/query && zip -r "${{ github.workspace }}/modules/lambda/.build/query.zip" .)
+
       - name: Init Terraform
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
         env:
@@ -67,5 +77,11 @@ jobs:
       - name: Upload plan artifact
         uses: actions/upload-artifact@v4
         with:
-          name: tfplan
+          name: tfplan-${{ github.event.inputs.environment || 'dev' }}
           path: environments/${{ github.event.inputs.environment || 'dev' }}/plan.tfplan
+
+      - name: Upload lambda zips
+        uses: actions/upload-artifact@v4
+        with:
+          name: lambda-zips-${{ github.event.inputs.environment || 'dev' }}
+          path: modules/lambda/.build/*.zip

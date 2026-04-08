@@ -14,7 +14,7 @@ resource "aws_cloudfront_distribution" "ui" {
   comment             = "${var.prefix} chat UI"
 
   origin {
-    domain_name              = replace(var.ui_bucket_arn, "arn:aws:s3:::", "")
+    domain_name              = var.ui_bucket_domain_name != "" ? var.ui_bucket_domain_name : replace(var.ui_bucket_arn, "arn:aws:s3:::", "")
     origin_id                = "s3-ui"
     origin_access_control_id = aws_cloudfront_origin_access_control.ui.id
   }

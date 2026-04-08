@@ -50,6 +50,15 @@ jobs:
           ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: echo "Using environment=$ENVIRONMENT"
 
+      - name: Download lambda zips from plan workflow
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: terraform-plan.yml
+          name: lambda-zips-${{ github.event.inputs.environment || 'dev' }}
+          path: environments/${{ github.event.inputs.environment || 'dev' }}/
+          branch: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          workflow_conclusion: success
+
       - name: Init Terraform
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
         env:

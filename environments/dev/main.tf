@@ -55,5 +55,6 @@ module "cloudfront" {
   source        = "../../modules/cloudfront"
   prefix        = "${var.project_name}-${var.environment}"
   ui_bucket_arn = module.s3_ui.bucket_arn
+  ui_bucket_domain_name = module.s3_ui.bucket_regional_domain_name
   price_class   = var.cloudfront_price_class
 }
