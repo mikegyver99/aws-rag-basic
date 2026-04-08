@@ -85,3 +85,5 @@ jobs:
         with:
           name: lambda-zips-${{ github.event.inputs.environment || 'dev' }}
           path: modules/lambda/.build/*.zip
+          include-hidden-files: true
+          if-no-files-found: warn
