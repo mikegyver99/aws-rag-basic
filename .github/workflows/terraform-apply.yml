@@ -7,6 +7,10 @@ on:
         description: 'Confirm to run terraform apply'
         required: true
         default: 'no'
+      environment:
+        description: 'Environment to apply (folder under environments/)'
+        required: false
+        default: 'dev'
 
 jobs:
   apply:
@@ -27,18 +31,26 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION || 'us-west-2' }}
+          audience: sts.amazonaws.com
+
+      - name: Set environment
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
+        run: echo "Using environment=$ENVIRONMENT"
 
       - name: Render backend config
         env:
           ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+          ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: |
           sudo apt-get update && sudo apt-get install -y gettext-base
-          envsubst < environments/dev/backend.conf > environments/dev/backend.rendered.conf
+          envsubst < environments/${ENVIRONMENT}/backend.conf > environments/${ENVIRONMENT}/backend.rendered.conf
 
       - name: Init Terraform
+        working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
         run: |
-          terraform init -backend-config=environments/dev/backend.rendered.conf
+          terraform init -backend-config=../${{ 'environments/' + (github.event.inputs.environment || 'dev') + '/backend.rendered.conf' }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
