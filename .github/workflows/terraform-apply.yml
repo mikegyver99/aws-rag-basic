@@ -57,6 +57,18 @@ jobs:
         run: |
           terraform init -backend-config=backend.rendered.conf
 
-      - name: Terraform Apply
+      - name: Download plan artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: .
+
+      - name: Terraform Apply (from plan)
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
-        run: terraform apply -auto-approve
+        run: |
+          if [ ! -f plan.tfplan ]; then
+            echo "Plan file not found in working directory: $(pwd)" >&2
+            ls -la ../../environments || true
+            exit 1
+          fi
+          terraform apply -input=false plan.tfplan
