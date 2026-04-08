@@ -1,0 +1,61 @@
+variable "prefix" {
+  description = "Resource name prefix"
+  type        = string
+}
+
+variable "region" {
+  description = "AWS region"
+  type        = string
+}
+
+variable "embed_model_id" {
+  type = string
+}
+
+variable "claude_model_id" {
+  type = string
+}
+
+resource "aws_iam_role" "ingest_lambda" {
+  name = "${var.prefix}-ingest-lambda-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ingest_basic_execution" {
+  role       = aws_iam_role.ingest_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role" "query_lambda" {
+  name = "${var.prefix}-query-lambda-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "query_basic_execution" {
+  role       = aws_iam_role.query_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+output "ingest_role_arn" {
+  value = aws_iam_role.ingest_lambda.arn
+}
+
+output "query_role_arn" {
+  value = aws_iam_role.query_lambda.arn
+}

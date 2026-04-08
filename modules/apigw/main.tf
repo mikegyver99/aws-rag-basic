@@ -1,56 +1,58 @@
-# ── REST API ───────────────────────────────────────────────────────────────
-
-resource "aws_api_gateway_rest_api" "rag" {
-  name        = "${local.prefix}-api"
-  description = "RAG product catalog API"
+resource "aws_api_gateway_rest_api" "this" {
+  name        = "${var.prefix}-api"
+  description = "API for ${var.prefix}"
 
   endpoint_configuration {
     types = ["REGIONAL"]
   }
 }
 
-# ── /products resource ─────────────────────────────────────────────────────
-
 resource "aws_api_gateway_resource" "products" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
-  parent_id   = aws_api_gateway_rest_api.rag.root_resource_id
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  parent_id   = aws_api_gateway_rest_api.this.root_resource_id
   path_part   = "products"
 }
 
+resource "aws_api_gateway_resource" "query" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  parent_id   = aws_api_gateway_rest_api.this.root_resource_id
+  path_part   = "query"
+}
+
 resource "aws_api_gateway_method" "products_post" {
-  rest_api_id   = aws_api_gateway_rest_api.rag.id
+  rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.products.id
   http_method   = "POST"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "products_post" {
-  rest_api_id             = aws_api_gateway_rest_api.rag.id
+  rest_api_id             = aws_api_gateway_rest_api.this.id
   resource_id             = aws_api_gateway_resource.products.id
   http_method             = aws_api_gateway_method.products_post.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.ingest.invoke_arn
+  uri                     = var.ingest_lambda_arn
 }
 
 resource "aws_lambda_permission" "apigw_invoke_ingest" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.ingest.function_name
+  function_name = var.ingest_lambda_arn
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.rag.execution_arn}/*/*"
+  source_arn    = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
 }
 
 # CORS preflight for /products
 resource "aws_api_gateway_method" "products_options" {
-  rest_api_id   = aws_api_gateway_rest_api.rag.id
+  rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.products.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "products_options" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.products.id
   http_method = aws_api_gateway_method.products_options.http_method
   type        = "MOCK"
@@ -60,7 +62,7 @@ resource "aws_api_gateway_integration" "products_options" {
 }
 
 resource "aws_api_gateway_method_response" "products_options_200" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.products.id
   http_method = aws_api_gateway_method.products_options.http_method
   status_code = "200"
@@ -73,7 +75,7 @@ resource "aws_api_gateway_method_response" "products_options_200" {
 }
 
 resource "aws_api_gateway_integration_response" "products_options" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.products.id
   http_method = aws_api_gateway_method.products_options.http_method
   status_code = aws_api_gateway_method_response.products_options_200.status_code
@@ -85,48 +87,40 @@ resource "aws_api_gateway_integration_response" "products_options" {
   }
 }
 
-# ── /query resource ────────────────────────────────────────────────────────
-
-resource "aws_api_gateway_resource" "query" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
-  parent_id   = aws_api_gateway_rest_api.rag.root_resource_id
-  path_part   = "query"
-}
-
 resource "aws_api_gateway_method" "query_post" {
-  rest_api_id   = aws_api_gateway_rest_api.rag.id
+  rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.query.id
   http_method   = "POST"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "query_post" {
-  rest_api_id             = aws_api_gateway_rest_api.rag.id
+  rest_api_id             = aws_api_gateway_rest_api.this.id
   resource_id             = aws_api_gateway_resource.query.id
   http_method             = aws_api_gateway_method.query_post.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.query.invoke_arn
+  uri                     = var.query_lambda_arn
 }
 
 resource "aws_lambda_permission" "apigw_invoke_query" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.query.function_name
+  function_name = var.query_lambda_arn
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.rag.execution_arn}/*/*"
+  source_arn    = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
 }
 
 # CORS preflight for /query
 resource "aws_api_gateway_method" "query_options" {
-  rest_api_id   = aws_api_gateway_rest_api.rag.id
+  rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.query.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "query_options" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.query.id
   http_method = aws_api_gateway_method.query_options.http_method
   type        = "MOCK"
@@ -136,7 +130,7 @@ resource "aws_api_gateway_integration" "query_options" {
 }
 
 resource "aws_api_gateway_method_response" "query_options_200" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.query.id
   http_method = aws_api_gateway_method.query_options.http_method
   status_code = "200"
@@ -149,7 +143,7 @@ resource "aws_api_gateway_method_response" "query_options_200" {
 }
 
 resource "aws_api_gateway_integration_response" "query_options" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+  rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.query.id
   http_method = aws_api_gateway_method.query_options.http_method
   status_code = aws_api_gateway_method_response.query_options_200.status_code
@@ -161,10 +155,8 @@ resource "aws_api_gateway_integration_response" "query_options" {
   }
 }
 
-# ── Deployment & Stage ─────────────────────────────────────────────────────
-
-resource "aws_api_gateway_deployment" "rag" {
-  rest_api_id = aws_api_gateway_rest_api.rag.id
+resource "aws_api_gateway_deployment" "this" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
 
   triggers = {
     redeployment = sha1(jsonencode([
@@ -182,9 +174,14 @@ resource "aws_api_gateway_deployment" "rag" {
   }
 }
 
-resource "aws_api_gateway_stage" "rag" {
-  rest_api_id   = aws_api_gateway_rest_api.rag.id
-  deployment_id = aws_api_gateway_deployment.rag.id
+resource "aws_cloudwatch_log_group" "apigw" {
+  name              = "/aws/apigateway/${var.prefix}"
+  retention_in_days = 14
+}
+
+resource "aws_api_gateway_stage" "this" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  deployment_id = aws_api_gateway_deployment.this.id
   stage_name    = var.api_stage_name
 
   access_log_settings {
@@ -195,14 +192,13 @@ EOF
   }
 }
 
-# Throttling for cost protection — applied via a usage plan on the stage
-resource "aws_api_gateway_usage_plan" "rag" {
-  name        = "${local.prefix}-usage-plan"
-  description = "Default throttle limits for ${local.prefix}"
+resource "aws_api_gateway_usage_plan" "this" {
+  name        = "${var.prefix}-usage-plan"
+  description = "Default throttle limits for ${var.prefix}"
 
   api_stages {
-    api_id = aws_api_gateway_rest_api.rag.id
-    stage  = aws_api_gateway_stage.rag.stage_name
+    api_id = aws_api_gateway_rest_api.this.id
+    stage  = aws_api_gateway_stage.this.stage_name
   }
 
   throttle_settings {
@@ -211,7 +207,10 @@ resource "aws_api_gateway_usage_plan" "rag" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "apigw" {
-  name              = "/aws/apigateway/${local.prefix}"
-  retention_in_days = 14
+output "rest_api_id" {
+  value = aws_api_gateway_rest_api.this.id
+}
+
+output "stage_name" {
+  value = aws_api_gateway_stage.this.stage_name
 }

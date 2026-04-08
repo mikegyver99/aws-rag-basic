@@ -1,8 +1,0 @@
-bucket=your-terraform-state-bucket
-key=aws-rag-basic/terraform.tfstate
-region=us-east-1
-dynamodb_table=your-terraform-lock-table
-encrypt=true
-
-# Use with:
-# terraform init -backend-config=terraform/backend.conf.example

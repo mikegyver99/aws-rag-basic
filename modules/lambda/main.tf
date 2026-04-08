@@ -1,0 +1,69 @@
+data "archive_file" "ingest" {
+  type        = "zip"
+  source_dir  = var.ingest_source_dir
+  output_path = "${path.module}/.build/ingest.zip"
+}
+
+data "archive_file" "query" {
+  type        = "zip"
+  source_dir  = var.query_source_dir
+  output_path = "${path.module}/.build/query.zip"
+}
+
+resource "aws_lambda_function" "ingest" {
+  function_name    = "${var.prefix}-ingest"
+  role             = var.ingest_role_arn
+  handler          = "handler.handler"
+  runtime          = "python3.12"
+  filename         = data.archive_file.ingest.output_path
+  source_code_hash = data.archive_file.ingest.output_base64sha256
+  memory_size      = var.lambda_memory_mb
+  timeout          = var.lambda_timeout_sec
+
+  environment {
+    variables = merge(var.common_lambda_env, {})
+  }
+}
+
+resource "aws_cloudwatch_log_group" "ingest" {
+  name              = "/aws/lambda/${aws_lambda_function.ingest.function_name}"
+  retention_in_days = 14
+}
+
+resource "aws_lambda_function" "query" {
+  function_name    = "${var.prefix}-query"
+  role             = var.query_role_arn
+  handler          = "handler.handler"
+  runtime          = "python3.12"
+  filename         = data.archive_file.query.output_path
+  source_code_hash = data.archive_file.query.output_base64sha256
+  memory_size      = var.lambda_memory_mb
+  timeout          = var.lambda_timeout_sec
+
+  environment {
+    variables = merge(var.common_lambda_env, {
+      CLAUDE_MODEL_ID = var.claude_model_id
+    })
+  }
+}
+
+resource "aws_cloudwatch_log_group" "query" {
+  name              = "/aws/lambda/${aws_lambda_function.query.function_name}"
+  retention_in_days = 14
+}
+
+output "ingest_function_arn" {
+  value = aws_lambda_function.ingest.arn
+}
+
+output "query_function_arn" {
+  value = aws_lambda_function.query.arn
+}
+
+output "ingest_function_invoke_arn" {
+  value = aws_lambda_function.ingest.invoke_arn
+}
+
+output "query_function_invoke_arn" {
+  value = aws_lambda_function.query.invoke_arn
+}

@@ -1,17 +1,23 @@
 variable "aws_region" {
-  description = "AWS region to deploy all resources into."
+  description = "AWS region"
   type        = string
   default     = "us-east-1"
 }
 
 variable "project_name" {
-  description = "Short slug used as a prefix for every resource name."
+  description = "Project name"
   type        = string
   default     = "rag-basic"
 }
 
 variable "environment" {
-  description = "Deployment environment (dev | staging | prod)."
+  description = "Environment name"
+  type        = string
+  default     = "dev"
+}
+
+variable "api_stage_name" {
+  description = "API Gateway stage"
   type        = string
   default     = "dev"
 }
@@ -52,26 +58,9 @@ variable "lambda_timeout_sec" {
   default     = 60
 }
 
-variable "top_k" {
-  description = "Number of nearest-neighbour chunks returned per query."
-  type        = number
-  default     = 5
-}
-
-variable "chunk_size_tokens" {
-  description = "Approximate token count per description chunk."
-  type        = number
-  default     = 400
-}
-
-variable "api_stage_name" {
-  description = "API Gateway deployment stage name."
-  type        = string
-  default     = "prod"
-}
-
 variable "cloudfront_price_class" {
   description = "CloudFront price class (PriceClass_100 | PriceClass_200 | PriceClass_All)."
   type        = string
   default     = "PriceClass_100"
 }
+
