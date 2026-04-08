@@ -25,6 +25,14 @@ jobs:
         with:
           terraform_version: 1.5.7
 
+      - name: Render backend config
+        env:
+          ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+          ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext-base
+          envsubst < environments/${ENVIRONMENT}/backend.conf > environments/${ENVIRONMENT}/backend.rendered.conf
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -37,14 +45,6 @@ jobs:
         env:
           ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
         run: echo "Using environment=$ENVIRONMENT"
-
-      - name: Render backend config
-        env:
-          ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-          ENVIRONMENT: ${{ github.event.inputs.environment || 'dev' }}
-        run: |
-          sudo apt-get update && sudo apt-get install -y gettext-base
-          envsubst < environments/${ENVIRONMENT}/backend.conf > environments/${ENVIRONMENT}/backend.rendered.conf
 
       - name: Init Terraform
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}
