@@ -67,51 +67,20 @@ SYSTEM_PROMPT = (
 # ---------------------------------------------------------------------------
 
 def embed(text: str) -> list[float]:
-    """Call Bedrock Titan Embed Text v2 and return a 1536-dim vector."""
-    # Try multiple request shapes to handle model schema variations across
-    # Bedrock embedding models and provider changes. Attempt each candidate
-    # body until one succeeds and returns an `embedding` field.
-    candidates = [
-        {"inputText": text, "dimensions": 1536, "normalize": True},
-        {"input": text, "dimensions": 1536, "normalize": True},
-        {"input": text},
-        {"text": text},
-    ]
-
-    last_exc = None
-    for candidate in candidates:
-        try:
-            response = bedrock_runtime.invoke_model(
-                modelId=EMBED_MODEL_ID,
-                contentType="application/json",
-                accept="application/json",
-                body=json.dumps(candidate),
-            )
-            result = json.loads(response["body"].read())
-
-            # Common locations for embeddings in Bedrock responses
-            if isinstance(result, dict):
-                if "embedding" in result:
-                    return result["embedding"]
-                if "embeddings" in result:
-                    return result["embeddings"]
-                if "outputs" in result and isinstance(result["outputs"], list):
-                    for out in result["outputs"]:
-                        if isinstance(out, dict) and "embedding" in out:
-                            return out["embedding"]
-                if "output" in result and isinstance(result["output"], dict) and "embedding" in result["output"]:
-                    return result["output"]["embedding"]
-
-            # If we reach here without returning, treat as failure for this shape
-        except Exception as exc:  # noqa: BLE001
-            last_exc = exc
-            logger.debug("embed() candidate failed: %s — %s", candidate, exc)
-            continue
-
-    # If none of the candidates succeeded, raise the last error for visibility
-    if last_exc:
-        raise last_exc
-    raise RuntimeError("Embedding failed: no embedding found in response")
+    """Call Bedrock Titan Embed Text v2 and return a 1024-dim vector."""
+    body = json.dumps({
+        "inputText": text,
+        "dimensions": 1024,
+        "normalize": True,
+    })
+    response = bedrock_runtime.invoke_model(
+        modelId=EMBED_MODEL_ID,
+        contentType="application/json",
+        accept="application/json",
+        body=body,
+    )
+    result = json.loads(response["body"].read())
+    return result["embedding"]
 
 
 def search(query_vector: list[float], k: int = TOP_K) -> list[dict]:
@@ -180,14 +149,19 @@ def call_claude(question: str, context: str) -> str:
     )
 
     # Choose request schema based on model type. Anthropic models expect a
-    # `messages` array; other text models commonly accept a single `input`.
+    # `messages` array with a top-level `system` field; other text models
+    # commonly accept a single `input`.
     if CLAUDE_MODEL_ID.startswith("anthropic."):
         request_body = {
-            "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": "Here are the relevant products from our catalog:\n\n" + context + "\n\nCustomer question: " + question},
-            ],
+            "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 1024,
+            "system": SYSTEM_PROMPT,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Here are the relevant products from our catalog:\n\n" + context + "\n\nCustomer question: " + question,
+                },
+            ],
         }
     else:
         request_body = {

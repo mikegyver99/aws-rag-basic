@@ -89,11 +89,11 @@ def chunk_text(text: str, max_tokens: int = CHUNK_SIZE) -> list[str]:
 
 
 def embed(text: str) -> list[float]:
-    """Call Bedrock Titan Embed Text v2 and return a 1536-dim vector."""
+    """Call Bedrock Titan Embed Text v2 and return a 1024-dim vector."""
     body = json.dumps(
         {
             "inputText": text,
-            "dimensions": 1536,
+            "dimensions": 1024,
             "normalize": True,
         }
     )
@@ -125,7 +125,7 @@ def ensure_index() -> None:
                 "chunk_text":    {"type": "text"},
                 "embedding": {
                     "type": "knn_vector",
-                    "dimension": 1536,
+                    "dimension": 1024,
                     "method": {
                         "name": "hnsw",
                         "space_type": "cosinesimil",
