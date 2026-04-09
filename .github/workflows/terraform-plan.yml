@@ -57,6 +57,13 @@ jobs:
           (cd lambdas/ingest && zip -r "${{ github.workspace }}/modules/lambda/.build/ingest.zip" .)
           echo "Creating query zip..."
           (cd lambdas/query && zip -r "${{ github.workspace }}/modules/lambda/.build/query.zip" .)
+          echo "Building Python deps into layer/ and zipping layer..."
+          python3 -m pip install --upgrade pip
+          mkdir -p modules/lambda/.build/python
+          python3 -m pip install -r lambdas/ingest/requirements.txt -t modules/lambda/.build/python
+          pushd modules/lambda/.build
+          zip -r layer.zip python
+          popd
 
       - name: Init Terraform
         working-directory: environments/${{ github.event.inputs.environment || 'dev' }}

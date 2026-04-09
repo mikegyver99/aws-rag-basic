@@ -38,3 +38,17 @@ variable "common_lambda_env" {
 variable "claude_model_id" {
   type = string
 }
+
+variable "enable_lambda_layer" {
+  description = "Whether to publish and attach a Lambda layer with Python deps"
+  type        = bool
+  default     = true
+}
+
+variable "lambda_layer_name" {
+  description = "Name to assign to the published Lambda Layer"
+  type        = string
+  # Do not reference other variables in a default value; leave blank to let
+  # the module compute a sensible default based on `prefix`.
+  default     = ""
+}

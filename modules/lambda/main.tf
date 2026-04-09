@@ -10,6 +10,18 @@ data "archive_file" "query" {
   output_path = "${path.module}/.build/query.zip"
 }
 
+locals {
+  layer_name = var.lambda_layer_name != "" ? var.lambda_layer_name : "${var.prefix}-python-deps"
+}
+
+resource "aws_lambda_layer_version" "deps" {
+  count               = var.enable_lambda_layer ? 1 : 0
+  filename            = "${path.module}/.build/layer.zip"
+  layer_name          = local.layer_name
+  compatible_runtimes = ["python3.12"]
+  description         = "${var.prefix}-python-deps"
+}
+
 resource "aws_lambda_function" "ingest" {
   function_name    = "${var.prefix}-ingest"
   role             = var.ingest_role_arn
@@ -19,6 +31,8 @@ resource "aws_lambda_function" "ingest" {
   source_code_hash = data.archive_file.ingest.output_base64sha256
   memory_size      = var.lambda_memory_mb
   timeout          = var.lambda_timeout_sec
+
+  layers = var.enable_lambda_layer ? [aws_lambda_layer_version.deps[0].arn] : []
 
   environment {
     variables = merge(var.common_lambda_env, {})
@@ -45,6 +59,8 @@ resource "aws_lambda_function" "query" {
       CLAUDE_MODEL_ID = var.claude_model_id
     })
   }
+
+  layers = var.enable_lambda_layer ? [aws_lambda_layer_version.deps[0].arn] : []
 }
 
 resource "aws_cloudwatch_log_group" "query" {
