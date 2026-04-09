@@ -55,7 +55,7 @@ Notes:
 - Ensure the IAM identity you use for Terraform has permissions to read/write the S3 bucket and to put/get/delete items in the DynamoDB table.
 - Enable bucket versioning and server-side encryption for safer state handling.
 
-If you prefer to bootstrap resources using Terraform, you can add a small bootstrap configuration (see the `bootstrap/` folder) that creates the S3 bucket and DynamoDB table. Run that once (with a local backend) to create the resources, then re-run `terraform init` in `environments/dev` with the remote backend configured.
+You can bootstrap resources with Terraform by creating a small configuration that creates the S3 bucket and DynamoDB table. Run that once (with a local backend) to create the resources, then re-run `terraform init` in `environments/dev` with the remote backend configured.
 
 ## Terraform remote backend
 
@@ -102,7 +102,7 @@ Notes and recommended workflow:
 
 - Add `AWS_ACCOUNT` (or set it at org/repository level) so the backend config renders correctly.
 - The pipeline installs `gettext-base` to provide `envsubst`; this is safe and small. If you prefer not to install packages, replace the rendering step with `sed` substitutions.
-- Keep the bootstrap resources (S3 bucket and DynamoDB table) created before switching to the remote backend. Use the `bootstrap/` workflow or run the commands in the Bootstrapping section.
+- Keep the S3 bucket and DynamoDB table created before switching to the remote backend; run the commands in the Bootstrapping section.
 
 ### Environment secrets & approvals
 
