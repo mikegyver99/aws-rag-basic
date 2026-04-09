@@ -22,7 +22,7 @@ resource "aws_opensearchserverless_security_policy" "network" {
       { ResourceType = "collection" , Resource = ["collection/${var.collection_name}"] },
       { ResourceType = "dashboard" , Resource = ["collection/${var.collection_name}"] },
     ]
-    AllowFromPublic = true
+    AllowFromPublic = false
   }])
 }
 
