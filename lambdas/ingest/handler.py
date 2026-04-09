@@ -165,7 +165,7 @@ def ingest_product(product: dict) -> int:
             "return_policy": product.get("return_policy", ""),
         }
         doc_id = f"{product_id}-chunk-{idx}"
-        opensearch_client.index(index=INDEX_NAME, id=doc_id, body=doc)
+        opensearch_client.index(index=INDEX_NAME, body=doc)
         logger.debug("Indexed %s", doc_id)
 
     logger.info("Ingested product %s (%d chunks)", product_id, len(chunks))
