@@ -150,11 +150,22 @@ def call_claude(question: str, context: str) -> str:
         + question
     )
 
-    request_body = {
-        "input": prompt,
-        "maxTokens": 1024,
-        "temperature": 0.0,
-    }
+    # Choose request schema based on model type. Anthropic models expect a
+    # `messages` array; other text models commonly accept a single `input`.
+    if CLAUDE_MODEL_ID.startswith("anthropic."):
+        request_body = {
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": "Here are the relevant products from our catalog:\n\n" + context + "\n\nCustomer question: " + question},
+            ],
+            "max_tokens": 1024,
+        }
+    else:
+        request_body = {
+            "input": prompt,
+            "maxTokens": 1024,
+            "temperature": 0.0,
+        }
 
     response = bedrock_runtime.invoke_model(
         modelId=CLAUDE_MODEL_ID,
