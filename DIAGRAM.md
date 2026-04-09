@@ -37,7 +37,7 @@ flowchart LR
   LambdaIngest -->|index documents| OpenSearch
   LambdaQuery -->|"search (k-NN)"| OpenSearch
   LambdaIngest -->|call embed model| Bedrock
-  LambdaQuery -->|call embed model| Bedrock
+  LambdaQuery -->|"call embed + LLM"| Bedrock
   LambdaIngest <-->|reads uploads| S3Data
 
   %% Shared pieces

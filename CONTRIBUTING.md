@@ -15,7 +15,6 @@ Thanks for wanting to contribute! The goal of this document is to make it easy t
 
 - **Bootstrapping remote backend**:
   - Create the S3 bucket and DynamoDB lock table before pointing Terraform at the remote backend. See the Bootstrapping section in `README.md`.
-  - Use the `bootstrap/` folder or the `bootstrap` workflow to create these resources once (run locally with a local backend first).
 
 - **Secrets & CI**:
   - Add `AWS_ACCOUNT` (account id or short identifier) to repository or org secrets so CI can render `backend.conf`.
@@ -33,7 +32,7 @@ Thanks for wanting to contribute! The goal of this document is to make it easy t
 
 - **Testing changes**:
   - For infra changes, run `terraform plan` in the appropriate `environments/<env>` folder.
-  - Use the `bootstrap/` workflow or scripts only for initial resource creation; avoid re-running bootstrap against production-like resources.
+  - Use the bootstrapping scripts only for initial resource creation; avoid re-running bootstrap against production-like resources.
 
 - **Adding modules or resources**:
   - Place reusable code in `modules/` and reference it from `environments/*`.
