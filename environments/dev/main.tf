@@ -103,7 +103,12 @@ module "opensearch" {
   prefix          = "${var.project_name}-${var.environment}"
   collection_name = var.opensearch_collection_name
   # Restrict network policy to the created VPCE
+  # Restrict network policy to the created VPCE
   source_vpce_ids = [aws_opensearchserverless_vpc_endpoint.opensearch_vpce.id]
+  access_principal_arns = [
+    module.iam.ingest_role_arn,
+    module.iam.query_role_arn,
+  ]
 }
 
 module "lambda" {

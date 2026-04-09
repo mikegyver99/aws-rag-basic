@@ -17,3 +17,9 @@ variable "source_vpce_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "access_principal_arns" {
+  description = "List of IAM principal ARNs (roles/users) to grant access via an OpenSearch Serverless access policy."
+  type        = list(string)
+  default     = []
+}

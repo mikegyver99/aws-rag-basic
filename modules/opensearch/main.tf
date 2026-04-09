@@ -46,6 +46,33 @@ resource "aws_opensearchserverless_security_policy" "network" {
   policy = jsonencode([local.network_policy])
 }
 
+# Optional access policy granting specific IAM principals access to the collection
+locals {
+  access_policy = {
+    Description = "Access policy for ${var.collection_name}"
+    Rules       = [
+      {
+        ResourceType = "collection"
+        Resource     = ["collection/${var.collection_name}"]
+      }
+    ]
+    Principal = {
+      AWS = var.access_principal_arns
+    }
+  }
+}
+
+## NOTE: OpenSearch Serverless 'access' policy type is not supported
+## by the Terraform AWS provider in some versions. If you need to
+## create an access policy that grants IAM principals access to the
+## collection, you can either:
+##  - Upgrade the AWS provider to a version that supports 'access' policies,
+##  - Or create the access policy using the AWS CLI after Terraform apply.
+
+## The module accepts `access_principal_arns` but does not currently
+## create the access policy resource to maintain compatibility with
+## provider versions that lack support.
+
 resource "aws_opensearchserverless_collection" "products" {
   name        = var.collection_name
   type        = "VECTORSEARCH"

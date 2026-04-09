@@ -44,6 +44,45 @@ resource "aws_iam_role_policy_attachment" "query_vpc_access" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
+# Optional inline policy granting OpenSearch Serverless permissions for debugging
+resource "aws_iam_role_policy" "ingest_aoss_access" {
+  count = var.enable_aoss_access ? 1 : 0
+  name  = "${var.prefix}-ingest-aoss-access"
+  role  = aws_iam_role.ingest_lambda.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "aoss:*"
+        ]
+        Resource = ["*"]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "query_aoss_access" {
+  count = var.enable_aoss_access ? 1 : 0
+  name  = "${var.prefix}-query-aoss-access"
+  role  = aws_iam_role.query_lambda.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "aoss:*"
+        ]
+        Resource = ["*"]
+      }
+    ]
+  })
+}
+
 output "ingest_role_arn" {
   value = aws_iam_role.ingest_lambda.arn
 }
