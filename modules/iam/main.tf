@@ -16,6 +16,11 @@ resource "aws_iam_role_policy_attachment" "ingest_basic_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+resource "aws_iam_role_policy_attachment" "ingest_vpc_access" {
+  role       = aws_iam_role.ingest_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+
 resource "aws_iam_role" "query_lambda" {
   name = "${var.prefix}-query-lambda-role"
 
@@ -32,6 +37,11 @@ resource "aws_iam_role" "query_lambda" {
 resource "aws_iam_role_policy_attachment" "query_basic_execution" {
   role       = aws_iam_role.query_lambda.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "query_vpc_access" {
+  role       = aws_iam_role.query_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
 output "ingest_role_arn" {

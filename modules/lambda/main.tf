@@ -34,6 +34,14 @@ resource "aws_lambda_function" "ingest" {
   memory_size      = var.lambda_memory_mb
   timeout          = var.lambda_timeout_sec
 
+  dynamic "vpc_config" {
+    for_each = (length(var.vpc_subnet_ids) > 0 && length(var.vpc_security_group_ids) > 0) ? [1] : []
+    content {
+      subnet_ids         = var.vpc_subnet_ids
+      security_group_ids = var.vpc_security_group_ids
+    }
+  }
+
   layers = var.enable_lambda_layer ? [aws_lambda_layer_version.deps[0].arn] : []
 
   environment {
@@ -55,6 +63,14 @@ resource "aws_lambda_function" "query" {
   source_code_hash = data.archive_file.query.output_base64sha256
   memory_size      = var.lambda_memory_mb
   timeout          = var.lambda_timeout_sec
+
+  dynamic "vpc_config" {
+    for_each = (length(var.vpc_subnet_ids) > 0 && length(var.vpc_security_group_ids) > 0) ? [1] : []
+    content {
+      subnet_ids         = var.vpc_subnet_ids
+      security_group_ids = var.vpc_security_group_ids
+    }
+  }
 
   environment {
     variables = merge(var.common_lambda_env, {

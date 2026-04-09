@@ -42,6 +42,33 @@ resource "aws_opensearchserverless_vpc_endpoint" "opensearch_vpce" {
   security_group_ids = [aws_security_group.opensearch_vpce_sg.id]
 }
 
+resource "aws_security_group" "lambda_sg" {
+  name        = "${var.project_name}-${var.environment}-lambda-sg"
+  description = "Security group for Lambdas to reach AOSS VPCE"
+  vpc_id      = data.aws_vpc.default.id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-lambda-sg"
+  }
+}
+
+# Allow Lambda SG to reach the OpenSearch VPCE SG on HTTPS
+resource "aws_security_group_rule" "allow_from_lambda_to_vpce" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.opensearch_vpce_sg.id
+  source_security_group_id = aws_security_group.lambda_sg.id
+}
+
 module "s3_data" {
   source = "../../modules/s3"
   name   = "${var.project_name}-${var.environment}-data"
@@ -92,7 +119,9 @@ module "lambda" {
     OPENSEARCH_ENDPOINT = module.opensearch.collection_endpoint
     INDEX_NAME          = var.opensearch_index_name
   }
-  claude_model_id = var.claude_model_id
+  claude_model_id        = var.claude_model_id
+  vpc_subnet_ids         = data.aws_subnets.default.ids
+  vpc_security_group_ids = [aws_security_group.lambda_sg.id]
 }
 
 module "cloudfront" {

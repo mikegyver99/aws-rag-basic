@@ -52,3 +52,15 @@ variable "lambda_layer_name" {
   # the module compute a sensible default based on `prefix`.
   default     = ""
 }
+
+variable "vpc_subnet_ids" {
+  description = "List of subnet IDs for Lambda VPC config. Leave empty to run without VPC."
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_security_group_ids" {
+  description = "List of security group IDs for Lambdas. Leave empty to run without VPC."
+  type        = list(string)
+  default     = []
+}
