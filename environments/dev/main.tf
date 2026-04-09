@@ -16,11 +16,13 @@ module "s3_ui" {
 }
 
 module "apigw" {
-  source            = "../../modules/apigw"
-  prefix            = "${var.project_name}-${var.environment}"
-  api_stage_name    = var.api_stage_name
-  ingest_lambda_arn = module.lambda.ingest_function_arn
-  query_lambda_arn  = module.lambda.query_function_arn
+  source                   = "../../modules/apigw"
+  prefix                   = "${var.project_name}-${var.environment}"
+  api_stage_name           = var.api_stage_name
+  ingest_lambda_arn        = module.lambda.ingest_function_arn
+  query_lambda_arn         = module.lambda.query_function_arn
+  ingest_lambda_invoke_arn = module.lambda.ingest_function_invoke_arn
+  query_lambda_invoke_arn  = module.lambda.query_function_invoke_arn
 }
 
 module "iam" {

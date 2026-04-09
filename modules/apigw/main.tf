@@ -32,7 +32,7 @@ resource "aws_api_gateway_integration" "products_post" {
   http_method             = aws_api_gateway_method.products_post.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = var.ingest_lambda_arn
+  uri                     = var.ingest_lambda_invoke_arn != "" ? var.ingest_lambda_invoke_arn : var.ingest_lambda_arn
 }
 
 resource "aws_lambda_permission" "apigw_invoke_ingest" {
@@ -100,7 +100,7 @@ resource "aws_api_gateway_integration" "query_post" {
   http_method             = aws_api_gateway_method.query_post.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = var.query_lambda_arn
+  uri                     = var.query_lambda_invoke_arn != "" ? var.query_lambda_invoke_arn : var.query_lambda_arn
 }
 
 resource "aws_lambda_permission" "apigw_invoke_query" {
@@ -177,6 +177,11 @@ resource "aws_api_gateway_deployment" "this" {
 resource "aws_cloudwatch_log_group" "apigw" {
   name              = "/aws/apigateway/${var.prefix}"
   retention_in_days = 14
+}
+
+resource "aws_api_gateway_account" "this" {
+  count = var.cloudwatch_role_arn != "" ? 1 : 0
+  cloudwatch_role_arn = var.cloudwatch_role_arn
 }
 
 resource "aws_api_gateway_stage" "this" {
