@@ -96,6 +96,7 @@ module "iam" {
   source = "../../modules/iam"
   prefix = "${var.project_name}-${var.environment}"
   region = var.aws_region
+  enable_aoss_access = true
 }
 
 module "opensearch" {

@@ -84,6 +84,30 @@ resource "aws_opensearchserverless_collection" "products" {
   ]
 }
 
+resource "aws_opensearchserverless_access_policy" "data" {
+  name = "${var.prefix}-access"
+  type = "data"
+
+  policy = jsonencode([
+    {
+      Description = "Data access for ${var.collection_name}"
+      Rules = [
+        {
+          ResourceType = "collection"
+          Resource     = ["collection/${var.collection_name}"]
+          Permission   = ["aoss:*"]
+        },
+        {
+          ResourceType = "index"
+          Resource     = ["index/${var.collection_name}/*"]
+          Permission   = ["aoss:*"]
+        }
+      ]
+      Principal = var.access_principal_arns
+    }
+  ])
+}
+
 output "collection_endpoint" {
   value = aws_opensearchserverless_collection.products.collection_endpoint
 }
