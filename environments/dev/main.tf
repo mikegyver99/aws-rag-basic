@@ -26,10 +26,13 @@ module "apigw" {
 }
 
 module "iam" {
-  source             = "../../modules/iam"
-  prefix             = "${var.project_name}-${var.environment}"
-  region             = var.aws_region
-  enable_aoss_access = true
+  source                = "../../modules/iam"
+  prefix                = "${var.project_name}-${var.environment}"
+  region                = var.aws_region
+  enable_aoss_access    = true
+  enable_bedrock_access = true
+  embed_model_id        = var.embed_model_id
+  claude_model_id       = var.claude_model_id
 }
 
 module "opensearch" {

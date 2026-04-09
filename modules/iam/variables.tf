@@ -21,3 +21,9 @@ variable "enable_aoss_access" {
   type        = bool
   default     = false
 }
+
+variable "enable_bedrock_access" {
+  description = "If true, attach an inline IAM policy allowing the Lambdas to call Bedrock InvokeModel."
+  type        = bool
+  default     = false
+}

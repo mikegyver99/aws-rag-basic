@@ -83,6 +83,54 @@ resource "aws_iam_role_policy" "query_aoss_access" {
   })
 }
 
+# Optional inline policy granting Bedrock InvokeModel permission to Lambdas
+locals {
+  specific_bedrock_resources = compact([
+    var.embed_model_id != "" ? "arn:aws:bedrock:${var.region}::foundation-model/${var.embed_model_id}" : "",
+    var.claude_model_id != "" ? "arn:aws:bedrock:${var.region}::foundation-model/${var.claude_model_id}" : "",
+  ])
+
+  bedrock_resources = length(local.specific_bedrock_resources) > 0 ? local.specific_bedrock_resources : ["arn:aws:bedrock:${var.region}::foundation-model/*"]
+}
+
+resource "aws_iam_role_policy" "ingest_bedrock_access" {
+  count = var.enable_bedrock_access ? 1 : 0
+  name  = "${var.prefix}-ingest-bedrock-access"
+  role  = aws_iam_role.ingest_lambda.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "bedrock:InvokeModel"
+        ]
+        Resource = local.bedrock_resources
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "query_bedrock_access" {
+  count = var.enable_bedrock_access ? 1 : 0
+  name  = "${var.prefix}-query-bedrock-access"
+  role  = aws_iam_role.query_lambda.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "bedrock:InvokeModel"
+        ]
+        Resource = local.bedrock_resources
+      }
+    ]
+  })
+}
+
 output "ingest_role_arn" {
   value = aws_iam_role.ingest_lambda.arn
 }
