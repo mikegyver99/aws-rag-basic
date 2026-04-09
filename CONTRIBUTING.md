@@ -19,7 +19,7 @@ Thanks for wanting to contribute! The goal of this document is to make it easy t
 
 - **Secrets & CI**:
   - Add `AWS_ACCOUNT` (account id or short identifier) to repository or org secrets so CI can render `backend.conf`.
-  - Configure `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, and any `TF_BACKEND_*` secrets used by your CI runs.
+  - Configure `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_REGION` for CI runs.
 
 - **Workflows**:
   - `terraform-plan.yml` runs `terraform fmt` and `terraform plan` and uploads the plan artifact.

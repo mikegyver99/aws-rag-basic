@@ -70,10 +70,6 @@ The workflows expect these repository secrets to be configured:
 
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 - `AWS_REGION`
-- `TF_BACKEND_BUCKET`
-- `TF_BACKEND_KEY` (e.g. `aws-rag-basic/environments/dev/terraform.tfstate`)
-- `TF_BACKEND_REGION`
-- `TF_BACKEND_DYNAMODB_TABLE`
 - `AWS_ACCOUNT`
 
 Example: open the Actions tab in GitHub, run `Terraform Plan` from a pull request or run the `Terraform Apply (manual)` workflow and set `approve` to `yes` to deploy.
@@ -85,7 +81,6 @@ The workflows automatically render `environments/dev/backend.conf` before runnin
 Required CI secrets for rendering and backend initialization:
 
 - `AWS_ACCOUNT` — account identifier used in bucket/table names.
-- `TF_BACKEND_BUCKET`, `TF_BACKEND_REGION`, `TF_BACKEND_DYNAMODB_TABLE` — optional; when present they are used by workflows or can be left blank if using the rendered backend file.
 
 Notes and recommended workflow:
 
