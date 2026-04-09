@@ -1,5 +1,21 @@
 # aws-rag-basic
 Repo for AWS RAG basic setup
+## OpenSearch Serverless (AOSS) — billing note
+
+- Deploying the OpenSearch Serverless collection (`module.opensearch`) provisions managed compute and storage that is billed while the collection exists. Even idle collections can incur hourly charges (a small collection for a few hours can cost a couple dollars).
+
+- To remove the collection and stop charges quickly, run from the environment folder:
+
+```bash
+cd environments/dev
+# Destroy only the OpenSearch collection/module
+terraform destroy -target=module.opensearch
+
+# Or destroy the entire environment (removes all resources)
+terraform destroy
+```
+
+- Recommendation: destroy test/dev collections when idle, or create/destroy them on demand. Use AWS Cost Explorer and billing alerts to track unexpected charges.
 
 ### Bootstrapping the S3 state bucket and DynamoDB lock table
 
@@ -93,4 +109,3 @@ Notes and recommended workflow:
 - Jobs must set `environment:` (for example `environment: dev`) to access GitHub Environment-scoped secrets; inputs named `environment` alone do not expose those secrets.
 - Create environment secrets under Repository Settings → Environments → <environment> → Secrets. These secrets are injected only when a job is assigned to that environment.
 - Environments may enforce protection rules (required reviewers or approval). When enabled, workflows will pause and wait for approval before the job runs.
-
