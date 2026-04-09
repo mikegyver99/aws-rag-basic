@@ -1,0 +1,5 @@
+.terraform/*
+.terraform.lock.hcl
+backend.rendered.conf
+environments/qa/.terraform/*
+environments/dev/.terraform/*
