@@ -23,34 +23,34 @@ locals {
       Resource     = ["collection/${var.collection_name}"]
     }
   ]
-  public_policy = {
+  public_policy_json = jsonencode([{
     Description     = "Public access to collection and Dashboards endpoint for ${var.collection_name}"
     Rules           = local.network_rules
     AllowFromPublic = true
-    SourceVPCEs     = []
-  }
+  }])
 
-  vpce_policy = merge(local.public_policy, {
+  vpce_policy_json = jsonencode([{
     Description     = "VPC access to collection and Dashboards endpoint for ${var.collection_name}"
+    Rules           = local.network_rules
     AllowFromPublic = false
     SourceVPCEs     = var.source_vpce_ids
-  })
+  }])
 
-  network_policy = length(var.source_vpce_ids) > 0 ? local.vpce_policy : local.public_policy
+  network_policy_json = length(var.source_vpce_ids) > 0 ? local.vpce_policy_json : local.public_policy_json
 }
 
 resource "aws_opensearchserverless_security_policy" "network" {
   name        = "${var.prefix}-net"
   type        = "network"
   description = "Network policy for ${var.collection_name}"
-  policy = jsonencode([local.network_policy])
+  policy      = local.network_policy_json
 }
 
 # Optional access policy granting specific IAM principals access to the collection
 locals {
   access_policy = {
     Description = "Access policy for ${var.collection_name}"
-    Rules       = [
+    Rules = [
       {
         ResourceType = "collection"
         Resource     = ["collection/${var.collection_name}"]

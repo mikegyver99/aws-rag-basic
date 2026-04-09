@@ -2,73 +2,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-# Minimal example: create (or reference) a VPC endpoint for OpenSearch Serverless
-# so the opensearch module can restrict network access to this VPCE.
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_subnets" "default" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-}
-
-resource "aws_security_group" "opensearch_vpce_sg" {
-  name        = "${var.project_name}-${var.environment}-opensearch-vpce-sg"
-  description = "Security group for OpenSearch Serverless VPC endpoint"
-  vpc_id      = data.aws_vpc.default.id
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [data.aws_vpc.default.cidr_block]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_opensearchserverless_vpc_endpoint" "opensearch_vpce" {
-  name               = "${var.project_name}-${var.environment}-opensearch-vpce"
-  vpc_id             = data.aws_vpc.default.id
-  subnet_ids         = data.aws_subnets.default.ids
-  security_group_ids = [aws_security_group.opensearch_vpce_sg.id]
-}
-
-resource "aws_security_group" "lambda_sg" {
-  name        = "${var.project_name}-${var.environment}-lambda-sg"
-  description = "Security group for Lambdas to reach AOSS VPCE"
-  vpc_id      = data.aws_vpc.default.id
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-lambda-sg"
-  }
-}
-
-# Allow Lambda SG to reach the OpenSearch VPCE SG on HTTPS
-resource "aws_security_group_rule" "allow_from_lambda_to_vpce" {
-  type                     = "ingress"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.opensearch_vpce_sg.id
-  source_security_group_id = aws_security_group.lambda_sg.id
-}
-
 module "s3_data" {
   source = "../../modules/s3"
   name   = "${var.project_name}-${var.environment}-data"
@@ -93,9 +26,9 @@ module "apigw" {
 }
 
 module "iam" {
-  source = "../../modules/iam"
-  prefix = "${var.project_name}-${var.environment}"
-  region = var.aws_region
+  source             = "../../modules/iam"
+  prefix             = "${var.project_name}-${var.environment}"
+  region             = var.aws_region
   enable_aoss_access = true
 }
 
@@ -103,9 +36,6 @@ module "opensearch" {
   source          = "../../modules/opensearch"
   prefix          = "${var.project_name}-${var.environment}"
   collection_name = var.opensearch_collection_name
-  # Restrict network policy to the created VPCE
-  # Restrict network policy to the created VPCE
-  source_vpce_ids = [aws_opensearchserverless_vpc_endpoint.opensearch_vpce.id]
   access_principal_arns = [
     module.iam.ingest_role_arn,
     module.iam.query_role_arn,
@@ -125,9 +55,7 @@ module "lambda" {
     OPENSEARCH_ENDPOINT = module.opensearch.collection_endpoint
     INDEX_NAME          = var.opensearch_index_name
   }
-  claude_model_id        = var.claude_model_id
-  vpc_subnet_ids         = data.aws_subnets.default.ids
-  vpc_security_group_ids = [aws_security_group.lambda_sg.id]
+  claude_model_id = var.claude_model_id
 }
 
 module "cloudfront" {
