@@ -16,7 +16,9 @@ locals {
 
 resource "aws_lambda_layer_version" "deps" {
   count               = var.enable_lambda_layer ? 1 : 0
-  filename            = "${path.module}/.build/layer.zip"
+  # Use the root module path so Terraform running in the environment folder
+  # picks up the artifact placed at environments/<env>/layer.zip by CI.
+  filename            = "${path.root}/layer.zip"
   layer_name          = local.layer_name
   compatible_runtimes = ["python3.12"]
   description         = "${var.prefix}-python-deps"
