@@ -50,7 +50,6 @@ module "lambda" {
   prefix             = "${var.project_name}-${var.environment}"
   ingest_source_dir  = "${path.root}/../../lambdas/ingest"
   query_source_dir   = "${path.root}/../../lambdas/query"
-  layer_source_dir   = "${path.root}/../../lambdas/layer"
   ingest_role_arn    = module.iam.ingest_role_arn
   query_role_arn     = module.iam.query_role_arn
   lambda_memory_mb   = 512

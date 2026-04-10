@@ -39,11 +39,6 @@ variable "claude_model_id" {
   type = string
 }
 
-variable "layer_source_dir" {
-  description = "Path to lambda layer source (python dependencies)"
-  type        = string
-}
-
 variable "enable_lambda_layer" {
   description = "Whether to publish and attach a Lambda layer with Python deps"
   type        = bool
