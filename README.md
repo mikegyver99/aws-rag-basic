@@ -75,7 +75,7 @@ terraform init \
 	-backend-config="region=us-west-2" \
 	-backend-config="dynamodb_table=your-lock-table"
 ```
-## Manual Actions
+## Manual Actions (Will be done by CI/CD but manual step for POC)
 ```
 cd <repo root>
 echo "Building Python deps into layer/ and zipping layer..."
