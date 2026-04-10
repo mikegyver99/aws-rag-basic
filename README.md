@@ -75,20 +75,19 @@ terraform init \
 	-backend-config="region=us-west-2" \
 	-backend-config="dynamodb_table=your-lock-table"
 ```
-## GitHub Actions CI
-
-A pair of workflows were added to `.github/workflows`:
-
-- `terraform-plan.yml` — runs `terraform fmt` and `terraform plan` on `pull_request` and `push` to `main`. It also supports manual `workflow_dispatch`.
-- `terraform-apply.yml` — a manual workflow (`workflow_dispatch`) that runs `terraform apply` only when the `approve` input is set to `yes`.
-
-The workflows expect these repository secrets to be configured:
-
-- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-- `AWS_REGION`
-- `AWS_ACCOUNT`
-
-Example: open the Actions tab in GitHub, run `Terraform Plan` from a pull request or run the `Terraform Apply (manual)` workflow and set `approve` to `yes` to deploy.
+## Manual Actions
+```
+cd <repo root>
+echo "Building Python deps into layer/ and zipping layer..."
+python3 -m pip install --upgrade pip
+mkdir -p modules/lambda/.build/python
+python3 -m pip install -r lambdas/ingest/requirements.txt -t modules/lambda/.build/python
+pushd modules/lambda/.build
+zip -r layer.zip python
+rm -rf python
+popd
+```
+Commit layer.zip file.  
 
 ### CI / backend rendering
 
@@ -103,9 +102,3 @@ Notes and recommended workflow:
 - Add `AWS_ACCOUNT` (or set it at org/repository level) so the backend config renders correctly.
 - The pipeline installs `gettext-base` to provide `envsubst`; this is safe and small. If you prefer not to install packages, replace the rendering step with `sed` substitutions.
 - Keep the S3 bucket and DynamoDB table created before switching to the remote backend; run the commands in the Bootstrapping section.
-
-### Environment secrets & approvals
-
-- Jobs must set `environment:` (for example `environment: dev`) to access GitHub Environment-scoped secrets; inputs named `environment` alone do not expose those secrets.
-- Create environment secrets under Repository Settings → Environments → <environment> → Secrets. These secrets are injected only when a job is assigned to that environment.
-- Environments may enforce protection rules (required reviewers or approval). When enabled, workflows will pause and wait for approval before the job runs.
