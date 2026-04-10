@@ -4,6 +4,12 @@ data "archive_file" "ingest" {
   output_path = "${path.module}/.build/ingest.zip"
 }
 
+data "archive_file" "layer" {
+  type        = "zip"
+  source_dir  = var.query_source_dir
+  output_path = "${path.module}/.build/layer.zip"
+}
+
 data "archive_file" "query" {
   type        = "zip"
   source_dir  = var.query_source_dir
@@ -18,7 +24,8 @@ resource "aws_lambda_layer_version" "deps" {
   count               = var.enable_lambda_layer ? 1 : 0
   # Use the root module path so Terraform running in the environment folder
   # picks up the artifact placed at environments/<env>/layer.zip by CI.
-  filename            = "${path.root}/layer.zip"
+  filename            = data.archive_file.layer.output_path
+  source_code_hash    = data.archive_file.layer.output_base64sha256
   layer_name          = local.layer_name
   compatible_runtimes = ["python3.12"]
   description         = "${var.prefix}-python-deps"
