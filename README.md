@@ -1,6 +1,3 @@
-# aws-rag-basic
-Repo for AWS RAG basic setup
-
 ## Project Summary
 
 This project demonstrates a basic **Retrieval-Augmented Generation (RAG)** pipeline on AWS, provisioned entirely with Terraform. It showcases how to combine several AWS services to ingest documents, generate vector embeddings, store them for similarity search, and answer natural-language queries using a large language model.
