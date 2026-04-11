@@ -1,5 +1,23 @@
 # aws-rag-basic
 Repo for AWS RAG basic setup
+
+## Project Summary
+
+This project demonstrates a basic **Retrieval-Augmented Generation (RAG)** pipeline on AWS, provisioned entirely with Terraform. It showcases how to combine several AWS services to ingest documents, generate vector embeddings, store them for similarity search, and answer natural-language queries using a large language model.
+
+**Key components:**
+
+- **Amazon OpenSearch Serverless (AOSS)** — vector store for k-NN similarity search over document embeddings.
+- **AWS Lambda (Ingest)** — reads documents from S3, generates embeddings via Amazon Bedrock, and indexes them into OpenSearch.
+- **AWS Lambda (Query)** — accepts a user question, embeds it, retrieves relevant documents from OpenSearch, and calls an LLM on Bedrock to produce an answer.
+- **Amazon Bedrock** — provides the embedding model and the LLM used for generation.
+- **API Gateway (REST)** — exposes the ingest and query Lambdas as HTTP endpoints.
+- **CloudFront + S3** — serves a simple static UI for interacting with the API.
+- **Terraform modules** — reusable modules for API Gateway, CloudFront, IAM, Lambda, OpenSearch, and S3, organized under `modules/`.
+- **CI/CD** — GitHub Actions workflows for automated `terraform plan` and `apply`.
+
+See [DIAGRAM.md](DIAGRAM.md) for the full architecture diagram.
+
 ## OpenSearch Serverless (AOSS) — billing note
 
 - Deploying the OpenSearch Serverless collection (`module.opensearch`) provisions managed compute and storage that is billed while the collection exists. Even idle collections can incur hourly charges (a small collection for a few hours can cost a couple dollars).
