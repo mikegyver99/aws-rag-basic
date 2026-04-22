@@ -12,7 +12,7 @@ Both paths converge on the same logic:
 
 The vector index is a JSON array stored at s3://INDEX_BUCKET/INDEX_KEY.
 Each entry holds the embedding alongside product metadata. The query Lambda
-loads this array and performs cosine similarity search in memory using numpy.
+loads this array and performs cosine similarity search in memory.
 """
 
 import json
@@ -23,7 +23,6 @@ import urllib.parse
 import uuid
 
 import boto3
-import numpy as np  # noqa: F401 — imported here so the layer is validated at cold start
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

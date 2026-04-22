@@ -14,7 +14,6 @@ import logging
 import os
 
 import boto3
-import numpy as np
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -78,11 +77,14 @@ def search(query_vector: list[float], k: int = TOP_K) -> list[dict]:
         return []
 
     # Vectors are L2-normalised (Titan normalize=True), so dot product == cosine similarity.
-    vectors = np.array([entry["embedding"] for entry in index], dtype=np.float32)
-    q = np.array(query_vector, dtype=np.float32)
-    scores = vectors @ q                       # shape: (n,)
-    top_indices = np.argsort(scores)[::-1][:k]
-    return [{key: val for key, val in index[i].items() if key != "embedding"} for i in top_indices]
+    scored_hits = []
+    for entry in index:
+        score = sum(value * query_value for value, query_value in zip(entry["embedding"], query_vector))
+        scored_hits.append((score, entry))
+
+    scored_hits.sort(key=lambda item: item[0], reverse=True)
+    top_hits = scored_hits[:k]
+    return [{key: value for key, value in entry.items() if key != "embedding"} for _, entry in top_hits]
 
 
 def build_context(hits: list[dict]) -> str:

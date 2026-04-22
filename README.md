@@ -4,9 +4,9 @@ This project demonstrates a basic **Retrieval-Augmented Generation (RAG)** pipel
 
 **Key components:**
 
-- **S3 vector index** — stores document embeddings as a JSON array in the data bucket; cosine similarity search runs in Lambda memory using numpy.
+- **S3 vector index** — stores document embeddings as a JSON array in the data bucket; cosine similarity search runs in Lambda memory.
 - **AWS Lambda (Ingest)** — reads documents from S3, generates embeddings via Amazon Bedrock, and appends them to the S3 vector index.
-- **AWS Lambda (Query)** — accepts a user question, embeds it, loads the S3 vector index, retrieves the top-k similar chunks via numpy cosine similarity, and calls an LLM on Bedrock to produce an answer.
+- **AWS Lambda (Query)** — accepts a user question, embeds it, loads the S3 vector index, retrieves the top-k similar chunks via cosine similarity, and calls an LLM on Bedrock to produce an answer.
 - **Amazon Bedrock** — provides the embedding model and the LLM used for generation.
 - **API Gateway (REST)** — exposes the ingest and query Lambdas as HTTP endpoints.
 - **CloudFront + S3** — serves a simple static UI for interacting with the API.
@@ -14,6 +14,18 @@ This project demonstrates a basic **Retrieval-Augmented Generation (RAG)** pipel
 - **CI/CD** — GitHub Actions workflows for automated `terraform plan` and `apply`.
 
 See [DIAGRAM.md](DIAGRAM.md) for the full architecture diagram.
+
+## Bedrock Model Access Note
+
+The default query path uses an Anthropic model through Amazon Bedrock. Anthropic requires a one-time use-case submission per AWS account before the model can be invoked.
+
+If you see this during a query:
+
+```json
+{"error": "Internal error: An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: Model use case details have not been submitted for this account. Fill out the Anthropic use case details form before using the model. If you have already filled out the form, try again in 15 minutes."}
+```
+
+go to the Bedrock console for the same AWS account and region, submit the Anthropic use-case details form, and retry after propagation completes. This is a one-time setup step per account.
 
 ### Bootstrapping the S3 state bucket and DynamoDB lock table
 
@@ -74,13 +86,15 @@ terraform init -backend-config=backend.rendered.conf
 terraform validate
 terraform plan -out=plan.tfplan
 ```
-## Manual Actions (Will be done by CI/CD but manual step for POC)
+## Manual Actions
+There are no required manual dependency-build steps for the current implementation.
+
+If you previously built a local Lambda layer for numpy, remove it before the next deploy so Terraform does not package stale files:
+
 ```bash
 cd <repo root>
-mkdir -p lambdas/layer/python
-pip install -r lambdas/layer/requirements.txt -t lambdas/layer/python
+rm -rf lambdas/layer/python
 ```
-The `lambdas/layer/python/` directory is gitignored. Run this once after cloning, and again whenever `lambdas/layer/requirements.txt` changes.
 
 ### CI / backend rendering
 

@@ -88,4 +88,4 @@ terraform output -json
 **Notes**
 - The ingest Lambda accepts a single product object, an array of products, or an S3 event pointing to a JSON file.
 - The query Lambda accepts `question` (also supports `query` or `q`) and returns `answer` and `sources`.
-- Retrieval is still RAG: the query Lambda embeds the question, loads `vector-index/index.json` from S3, ranks chunks with numpy cosine similarity, and sends the top results to the LLM.
+- Retrieval is still RAG: the query Lambda embeds the question, loads `vector-index/index.json` from S3, ranks chunks with cosine similarity, and sends the top results to the LLM.

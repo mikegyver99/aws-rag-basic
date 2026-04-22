@@ -34,7 +34,7 @@ flowchart LR
 
   %% Lambdas interactions
   LambdaIngest -->|"append embeddings\n(vector-index/index.json)"| S3Data
-  LambdaQuery -->|"load index,\ncosine similarity (numpy)"| S3Data
+  LambdaQuery -->|"load index,\ncosine similarity"| S3Data
   LambdaIngest -->|call embed model| Bedrock
   LambdaQuery -->|"call embed + LLM"| Bedrock
   LambdaIngest <-->|reads uploads| S3Data
