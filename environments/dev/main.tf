@@ -59,3 +59,11 @@ module "cloudfront" {
   ui_bucket_domain_name = module.s3_ui.bucket_regional_domain_name
   price_class           = var.cloudfront_price_class
 }
+
+resource "aws_s3_object" "ui_index" {
+  bucket       = module.s3_ui.bucket_id
+  key          = "index.html"
+  source       = "${path.root}/../../ui/index.html"
+  etag         = filemd5("${path.root}/../../ui/index.html")
+  content_type = "text/html"
+}

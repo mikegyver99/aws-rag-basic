@@ -63,6 +63,34 @@ resource "aws_cloudfront_distribution" "ui" {
   }
 }
 
+resource "aws_s3_bucket_policy" "ui_cloudfront_access" {
+  bucket = replace(var.ui_bucket_arn, "arn:aws:s3:::", "")
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AllowCloudFrontRead"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        }
+        Action   = "s3:GetObject"
+        Resource = "${var.ui_bucket_arn}/*"
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.ui.arn
+          }
+        }
+      }
+    ]
+  })
+}
+
 output "domain_name" {
   value = aws_cloudfront_distribution.ui.domain_name
+}
+
+output "distribution_arn" {
+  value = aws_cloudfront_distribution.ui.arn
 }
