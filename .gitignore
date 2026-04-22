@@ -5,3 +5,5 @@ plan.tfplan
 environments/qa/.terraform/*
 environments/dev/.terraform/*
 environments/dev/*.zip
+modules/lambda/.build/
+lambdas/layer/python/

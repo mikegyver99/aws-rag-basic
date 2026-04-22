@@ -8,7 +8,11 @@ Ingest Lambda — handles two ingestion paths:
 
 Both paths converge on the same logic:
   parse  →  chunk description (~400 tokens)  →  Bedrock Titan Embed v2
-  →  write vector + metadata to OpenSearch Serverless
+  →  write vector + metadata to S3 vector index (INDEX_BUCKET/INDEX_KEY)
+
+The vector index is a JSON array stored at s3://INDEX_BUCKET/INDEX_KEY.
+Each entry holds the embedding alongside product metadata. The query Lambda
+loads this array and performs cosine similarity search in memory using numpy.
 """
 
 import json
@@ -19,8 +23,7 @@ import urllib.parse
 import uuid
 
 import boto3
-from opensearchpy import OpenSearch, RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
+import numpy as np  # noqa: F401 — imported here so the layer is validated at cold start
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -28,36 +31,17 @@ logger.setLevel(logging.INFO)
 # ---------------------------------------------------------------------------
 # Environment variables (set by Terraform)
 # ---------------------------------------------------------------------------
-OPENSEARCH_ENDPOINT = os.environ["OPENSEARCH_ENDPOINT"]  # e.g. https://xxx.us-west-2.aoss.amazonaws.com
-INDEX_NAME = os.environ.get("INDEX_NAME", "products")
+INDEX_BUCKET   = os.environ["INDEX_BUCKET"]                          # S3 bucket holding the vector index
+INDEX_KEY      = os.environ.get("INDEX_KEY", "vector-index/index.json")
 EMBED_MODEL_ID = os.environ.get("EMBED_MODEL_ID", "amazon.titan-embed-text-v2:0")
-CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", "400"))   # approximate tokens per chunk
-REGION = os.environ.get("AWS_REGION", "us-west-2")
-DATA_BUCKET = os.environ.get("DATA_BUCKET", "")
+CHUNK_SIZE     = int(os.environ.get("CHUNK_SIZE", "400"))            # approximate tokens per chunk
+REGION         = os.environ.get("AWS_REGION", "us-west-2")
 
 # ---------------------------------------------------------------------------
 # AWS clients
 # ---------------------------------------------------------------------------
-s3_client = boto3.client("s3", region_name=REGION)
+s3_client       = boto3.client("s3", region_name=REGION)
 bedrock_runtime = boto3.client("bedrock-runtime", region_name=REGION)
-
-credentials = boto3.Session().get_credentials()
-awsauth = AWS4Auth(
-    credentials.access_key,
-    credentials.secret_key,
-    REGION,
-    "aoss",
-    session_token=credentials.token,
-)
-
-opensearch_client = OpenSearch(
-    hosts=[OPENSEARCH_ENDPOINT],
-    http_auth=awsauth,
-    use_ssl=True,
-    verify_certs=True,
-    connection_class=RequestsHttpConnection,
-    timeout=30,
-)
 
 
 # ---------------------------------------------------------------------------
@@ -107,53 +91,34 @@ def embed(text: str) -> list[float]:
     return result["embedding"]
 
 
-def ensure_index() -> None:
-    """Create the k-NN index if it does not already exist."""
-    if opensearch_client.indices.exists(index=INDEX_NAME):
-        return
-    index_body = {
-        "settings": {
-            "index": {
-                "knn": True,
-                "knn.algo_param.ef_search": 100,
-            }
-        },
-        "mappings": {
-            "properties": {
-                "product_id":    {"type": "keyword"},
-                "chunk_index":   {"type": "integer"},
-                "chunk_text":    {"type": "text"},
-                "embedding": {
-                    "type": "knn_vector",
-                    "dimension": 1024,
-                    "method": {
-                        "name": "hnsw",
-                        "space_type": "cosinesimil",
-                        "engine": "nmslib",
-                        "parameters": {"ef_construction": 128, "m": 24},
-                    },
-                },
-                "name":          {"type": "keyword"},
-                "category":      {"type": "keyword"},
-                "price":         {"type": "float"},
-                "attributes":    {"type": "object", "enabled": True},
-                "return_policy": {"type": "text"},
-            }
-        },
-    }
-    opensearch_client.indices.create(index=INDEX_NAME, body=index_body)
-    logger.info("Created index %s", INDEX_NAME)
+def load_index() -> list[dict]:
+    """Load the vector index from S3. Returns an empty list if not found."""
+    try:
+        obj = s3_client.get_object(Bucket=INDEX_BUCKET, Key=INDEX_KEY)
+        return json.loads(obj["Body"].read().decode("utf-8"))
+    except s3_client.exceptions.NoSuchKey:
+        return []
 
 
-def ingest_product(product: dict) -> int:
-    """Chunk, embed, and index a single product. Returns number of chunks written."""
+def save_index(index: list[dict]) -> None:
+    """Persist the vector index to S3."""
+    s3_client.put_object(
+        Bucket=INDEX_BUCKET,
+        Key=INDEX_KEY,
+        Body=json.dumps(index).encode("utf-8"),
+        ContentType="application/json",
+    )
+
+
+def ingest_product(product: dict, index: list[dict]) -> int:
+    """Chunk, embed, and append a single product to *index*. Returns number of chunks."""
     description = product.get("description", "")
     chunks = chunk_text(description)
     product_id = product.get("id", str(uuid.uuid4()))
 
     for idx, chunk in enumerate(chunks):
         vector = embed(chunk)
-        doc = {
+        index.append({
             "product_id":    product_id,
             "chunk_index":   idx,
             "chunk_text":    chunk,
@@ -163,10 +128,8 @@ def ingest_product(product: dict) -> int:
             "price":         product.get("price", 0.0),
             "attributes":    product.get("attributes", {}),
             "return_policy": product.get("return_policy", ""),
-        }
-        doc_id = f"{product_id}-chunk-{idx}"
-        opensearch_client.index(index=INDEX_NAME, body=doc)
-        logger.debug("Indexed %s", doc_id)
+        })
+        logger.debug("Prepared chunk %s-%d", product_id, idx)
 
     logger.info("Ingested product %s (%d chunks)", product_id, len(chunks))
     return len(chunks)
@@ -190,8 +153,6 @@ def load_products_from_s3(bucket: str, key: str) -> list[dict]:
 
 def handler(event: dict, context) -> dict:  # noqa: ANN001
     """Lambda entry point."""
-    ensure_index()
-
     products: list[dict] = []
 
     # --- S3 trigger ---
@@ -240,19 +201,24 @@ def handler(event: dict, context) -> dict:  # noqa: ANN001
             "body": json.dumps({"message": "No products to ingest", "ingested": 0}),
         }
 
+    # Load existing index once; all products appended in memory, then saved once.
+    index = load_index()
+
     total_products = 0
     total_chunks = 0
     errors: list[str] = []
 
     for product in products:
         try:
-            chunks = ingest_product(product)
+            chunks = ingest_product(product, index)
             total_products += 1
             total_chunks += chunks
         except Exception as exc:  # noqa: BLE001
             pid = product.get("id", "unknown")
             logger.error("Failed to ingest product %s: %s", pid, exc)
             errors.append(f"product {pid}: {exc}")
+
+    save_index(index)
 
     result = {
         "ingested_products": total_products,

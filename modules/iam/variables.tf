@@ -16,10 +16,10 @@ variable "claude_model_id" {
   default = ""
 }
 
-variable "enable_aoss_access" {
-  description = "If true, attach an inline IAM policy granting AOSS actions to the Lambda roles (for debugging)."
-  type        = bool
-  default     = false
+variable "index_bucket_arn" {
+  description = "ARN of the S3 bucket used as the vector index store. Grants Lambdas GetObject/PutObject when set."
+  type        = string
+  default     = ""
 }
 
 variable "enable_bedrock_access" {

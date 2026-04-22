@@ -1,0 +1,9 @@
+{
+  "id": "PROD-001",
+  "name": "Trail Runner Pro 5000",
+  "category": "Footwear",
+  "description": "The Trail Runner Pro 5000 is engineered for serious trail athletes who demand performance on technical terrain...",
+  "price": 149.99,
+  "attributes": {"color":"Slate Blue / Orange","material":"Gore-Tex / Mesh Upper","waterproof":true},
+  "return_policy": "30-day returns in original unworn condition with original packaging."
+}

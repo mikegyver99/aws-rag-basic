@@ -4,33 +4,16 @@ This project demonstrates a basic **Retrieval-Augmented Generation (RAG)** pipel
 
 **Key components:**
 
-- **Amazon OpenSearch Serverless (AOSS)** — vector store for k-NN similarity search over document embeddings.
-- **AWS Lambda (Ingest)** — reads documents from S3, generates embeddings via Amazon Bedrock, and indexes them into OpenSearch.
-- **AWS Lambda (Query)** — accepts a user question, embeds it, retrieves relevant documents from OpenSearch, and calls an LLM on Bedrock to produce an answer.
+- **S3 vector index** — stores document embeddings as a JSON array in the data bucket; cosine similarity search runs in Lambda memory using numpy.
+- **AWS Lambda (Ingest)** — reads documents from S3, generates embeddings via Amazon Bedrock, and appends them to the S3 vector index.
+- **AWS Lambda (Query)** — accepts a user question, embeds it, loads the S3 vector index, retrieves the top-k similar chunks via numpy cosine similarity, and calls an LLM on Bedrock to produce an answer.
 - **Amazon Bedrock** — provides the embedding model and the LLM used for generation.
 - **API Gateway (REST)** — exposes the ingest and query Lambdas as HTTP endpoints.
 - **CloudFront + S3** — serves a simple static UI for interacting with the API.
-- **Terraform modules** — reusable modules for API Gateway, CloudFront, IAM, Lambda, OpenSearch, and S3, organized under `modules/`.
+- **Terraform modules** — reusable modules for API Gateway, CloudFront, IAM, Lambda, and S3, organized under `modules/`.
 - **CI/CD** — GitHub Actions workflows for automated `terraform plan` and `apply`.
 
 See [DIAGRAM.md](DIAGRAM.md) for the full architecture diagram.
-
-## OpenSearch Serverless (AOSS) — billing note
-
-- Deploying the OpenSearch Serverless collection (`module.opensearch`) provisions managed compute and storage that is billed while the collection exists. Even idle collections can incur hourly charges (a small collection for a few hours can cost a couple dollars).
-
-- To remove the collection and stop charges quickly, run from the environment folder:
-
-```bash
-cd environments/dev
-# Destroy only the OpenSearch collection/module
-terraform destroy -target=module.opensearch
-
-# Or destroy the entire environment (removes all resources)
-terraform destroy
-```
-
-- Recommendation: destroy test/dev collections when idle, or create/destroy them on demand. Use AWS Cost Explorer and billing alerts to track unexpected charges.
 
 ### Bootstrapping the S3 state bucket and DynamoDB lock table
 
@@ -84,25 +67,20 @@ The backend configuration for `dev` lives at `environments/dev/backend.conf`. To
 Example (from `environments/dev`):
 
 ```bash
-terraform init \
-	-backend-config="bucket=your-terraform-state-bucket" \
-	-backend-config="key=aws-rag-basic/environments/dev/terraform.tfstate" \
-	-backend-config="region=us-west-2" \
-	-backend-config="dynamodb_table=your-lock-table"
+cd environments/dev
+export ACCOUNT=123456789012
+envsubst < backend.conf > backend.rendered.conf
+terraform init -backend-config=backend.rendered.conf
+terraform validate
+terraform plan -out=plan.tfplan
 ```
 ## Manual Actions (Will be done by CI/CD but manual step for POC)
-```
+```bash
 cd <repo root>
-echo "Building Python deps into layer/ and zipping layer..."
-python3 -m pip install --upgrade pip
-mkdir -p modules/lambda/.build/python
-python3 -m pip install -r lambdas/ingest/requirements.txt -t modules/lambda/.build/python
-pushd modules/lambda/.build
-zip -r layer.zip python
-rm -rf python
-popd
+mkdir -p lambdas/layer/python
+pip install -r lambdas/layer/requirements.txt -t lambdas/layer/python
 ```
-Commit layer.zip file.  
+The `lambdas/layer/python/` directory is gitignored. Run this once after cloning, and again whenever `lambdas/layer/requirements.txt` changes.
 
 ### CI / backend rendering
 

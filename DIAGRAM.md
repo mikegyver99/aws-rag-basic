@@ -5,14 +5,13 @@ The following diagram shows the resources provisioned by this repository and how
 ```mermaid
 flowchart LR
   subgraph AWS
-    S3Data["S3\nData Bucket"]
+    S3Data["S3\nData Bucket\n(data + vector index)"]
     S3UI["S3\nUI Bucket"]
     CF["CloudFront\n(distribution)"]
     APIGW["API Gateway\n(REST)"]
     LambdaIngest["Lambda\n-ingest"]
     LambdaQuery["Lambda\n-query"]
     Layer["Lambda Layer\n(python deps)"]
-    OpenSearch["AOSS Collection\n(VECTORSEARCH)"]
     DynamoDB["DynamoDB\n(TF lock table)"]
     TFStateS3["S3\n(Terraform state bucket)"]
     IAM[IAM Roles]
@@ -34,8 +33,8 @@ flowchart LR
   APIGW -->|invoke| LambdaQuery
 
   %% Lambdas interactions
-  LambdaIngest -->|index documents| OpenSearch
-  LambdaQuery -->|"search (k-NN)"| OpenSearch
+  LambdaIngest -->|"append embeddings\n(vector-index/index.json)"| S3Data
+  LambdaQuery -->|"load index,\ncosine similarity (numpy)"| S3Data
   LambdaIngest -->|call embed model| Bedrock
   LambdaQuery -->|"call embed + LLM"| Bedrock
   LambdaIngest <-->|reads uploads| S3Data
@@ -55,5 +54,5 @@ flowchart LR
 
   %% Notes
   classDef infra fill:#f8f9fa,stroke:#333,stroke-width:1px;
-  class AWS,GitHubCI,TFStateS3,DynamoDB,OpenSearch infra;
+  class AWS,GitHubCI,TFStateS3,DynamoDB infra;
 ```

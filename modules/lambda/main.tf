@@ -6,7 +6,7 @@ data "archive_file" "ingest" {
 
 data "archive_file" "layer" {
   type        = "zip"
-  source_dir  = var.query_source_dir
+  source_dir  = var.layer_source_dir
   output_path = "${path.module}/.build/layer.zip"
 }
 

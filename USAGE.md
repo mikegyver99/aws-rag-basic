@@ -1,7 +1,7 @@
 **USAGE**
 
 **Quick Start**
-- **Retrieve API URL**: run Terraform outputs in the environment folder (e.g. `environments/dev`) and set `API_URL` from the `api_url` output.
+- **Retrieve API URL**: run Terraform outputs in the environment folder (e.g. `environments/dev`) and set `API_URL` from the `api_endpoint` output.
 - **Set env**: export `API_URL`, `DATA_BUCKET`, and `AWS_REGION` before running examples.
 
 **Ingest — single product (API)**
@@ -78,7 +78,7 @@ terraform init
 terraform apply -auto-approve   # or terraform plan
 terraform output -json
 ```
-- Use the outputs to populate `API_URL`, `DATA_BUCKET`, etc.
+- Use `api_endpoint` for `API_URL` and `data_bucket_name` for `DATA_BUCKET`.
 
 **References**
 - Ingest logic: [lambdas/ingest/handler.py](lambdas/ingest/handler.py#L1-L400)
@@ -88,3 +88,4 @@ terraform output -json
 **Notes**
 - The ingest Lambda accepts a single product object, an array of products, or an S3 event pointing to a JSON file.
 - The query Lambda accepts `question` (also supports `query` or `q`) and returns `answer` and `sources`.
+- Retrieval is still RAG: the query Lambda embeds the question, loads `vector-index/index.json` from S3, ranks chunks with numpy cosine similarity, and sends the top results to the LLM.

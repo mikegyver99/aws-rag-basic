@@ -13,6 +13,11 @@ variable "query_source_dir" {
   type        = string
 }
 
+variable "layer_source_dir" {
+  description = "Path to lambda layer source"
+  type        = string
+}
+
 variable "ingest_role_arn" {
   description = "IAM role ARN for ingest lambda"
   type        = string

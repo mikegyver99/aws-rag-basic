@@ -22,18 +22,6 @@ variable "api_stage_name" {
   default     = "dev"
 }
 
-variable "opensearch_collection_name" {
-  description = "Name of the OpenSearch Serverless collection."
-  type        = string
-  default     = "products"
-}
-
-variable "opensearch_index_name" {
-  description = "Name of the k-NN index inside the collection."
-  type        = string
-  default     = "products"
-}
-
 variable "embed_model_id" {
   description = "Bedrock model ID for text embeddings."
   type        = string

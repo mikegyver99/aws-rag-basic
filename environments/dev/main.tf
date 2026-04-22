@@ -29,20 +29,10 @@ module "iam" {
   source                = "../../modules/iam"
   prefix                = "${var.project_name}-${var.environment}"
   region                = var.aws_region
-  enable_aoss_access    = true
   enable_bedrock_access = true
   embed_model_id        = var.embed_model_id
   claude_model_id       = var.claude_model_id
-}
-
-module "opensearch" {
-  source          = "../../modules/opensearch"
-  prefix          = "${var.project_name}-${var.environment}"
-  collection_name = var.opensearch_collection_name
-  access_principal_arns = [
-    module.iam.ingest_role_arn,
-    module.iam.query_role_arn,
-  ]
+  index_bucket_arn      = module.s3_data.bucket_arn
 }
 
 module "lambda" {
@@ -50,13 +40,14 @@ module "lambda" {
   prefix             = "${var.project_name}-${var.environment}"
   ingest_source_dir  = "${path.root}/../../lambdas/ingest"
   query_source_dir   = "${path.root}/../../lambdas/query"
+  layer_source_dir   = "${path.root}/../../lambdas/layer"
   ingest_role_arn    = module.iam.ingest_role_arn
   query_role_arn     = module.iam.query_role_arn
   lambda_memory_mb   = 512
   lambda_timeout_sec = 60
   common_lambda_env = {
-    OPENSEARCH_ENDPOINT = module.opensearch.collection_endpoint
-    INDEX_NAME          = var.opensearch_index_name
+    INDEX_BUCKET = module.s3_data.bucket_id
+    INDEX_KEY    = "vector-index/index.json"
   }
   claude_model_id = var.claude_model_id
 }

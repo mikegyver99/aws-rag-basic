@@ -44,10 +44,9 @@ resource "aws_iam_role_policy_attachment" "query_vpc_access" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
-# Optional inline policy granting OpenSearch Serverless permissions for debugging
-resource "aws_iam_role_policy" "ingest_aoss_access" {
-  count = var.enable_aoss_access ? 1 : 0
-  name  = "${var.prefix}-ingest-aoss-access"
+# Inline policy granting Lambdas read/write access to the S3 vector index bucket
+resource "aws_iam_role_policy" "ingest_s3_index_access" {
+  name  = "${var.prefix}-ingest-s3-index-access"
   role  = aws_iam_role.ingest_lambda.name
 
   policy = jsonencode({
@@ -56,29 +55,32 @@ resource "aws_iam_role_policy" "ingest_aoss_access" {
       {
         Effect = "Allow"
         Action = [
-          "aoss:*"
+          "s3:GetObject",
+          "s3:PutObject",
         ]
-        Resource = ["*"]
-      }
+        Resource = "${var.index_bucket_arn}/*"
+      },
+      {
+        Effect   = "Allow"
+        Action   = "s3:ListBucket"
+        Resource = var.index_bucket_arn
+      },
     ]
   })
 }
 
-resource "aws_iam_role_policy" "query_aoss_access" {
-  count = var.enable_aoss_access ? 1 : 0
-  name  = "${var.prefix}-query-aoss-access"
+resource "aws_iam_role_policy" "query_s3_index_access" {
+  name  = "${var.prefix}-query-s3-index-access"
   role  = aws_iam_role.query_lambda.name
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = [
-          "aoss:*"
-        ]
-        Resource = ["*"]
-      }
+        Effect   = "Allow"
+        Action   = "s3:GetObject"
+        Resource = "${var.index_bucket_arn}/*"
+      },
     ]
   })
 }

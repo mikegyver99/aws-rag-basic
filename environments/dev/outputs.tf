@@ -18,9 +18,9 @@ output "ui_bucket_name" {
   value       = module.s3_ui.bucket_id
 }
 
-output "opensearch_endpoint" {
-  description = "OpenSearch Serverless collection endpoint (HTTPS)."
-  value       = module.opensearch.collection_endpoint
+output "vector_index_location" {
+  description = "S3 location of the vector index JSON used for retrieval."
+  value       = "s3://${module.s3_data.bucket_id}/vector-index/index.json"
 }
 
 output "ingest_lambda_arn" {

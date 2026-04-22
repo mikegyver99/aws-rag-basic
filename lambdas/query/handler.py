@@ -3,10 +3,10 @@ Query Lambda — handles user chat queries:
 
 1. Receive a question via API Gateway POST /query
 2. Embed the question using Bedrock Titan Embed Text v2
-3. Run a k-NN search against OpenSearch Serverless (top-k chunks)
+3. Run cosine similarity search against the S3 vector index (top-k chunks)
 4. Build a prompt from the retrieved product chunks
 5. Call Claude 3 Haiku on Bedrock for the answer
-6. Return the answer JSON (or streamed) to the caller
+6. Return the answer JSON to the caller
 """
 
 import json
@@ -14,8 +14,7 @@ import logging
 import os
 
 import boto3
-from opensearchpy import OpenSearch, RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
+import numpy as np
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -23,35 +22,18 @@ logger.setLevel(logging.INFO)
 # ---------------------------------------------------------------------------
 # Environment variables (set by Terraform)
 # ---------------------------------------------------------------------------
-OPENSEARCH_ENDPOINT = os.environ["OPENSEARCH_ENDPOINT"]
-INDEX_NAME = os.environ.get("INDEX_NAME", "products")
-EMBED_MODEL_ID = os.environ.get("EMBED_MODEL_ID", "amazon.titan-embed-text-v2:0")
+INDEX_BUCKET    = os.environ["INDEX_BUCKET"]
+INDEX_KEY       = os.environ.get("INDEX_KEY", "vector-index/index.json")
+EMBED_MODEL_ID  = os.environ.get("EMBED_MODEL_ID", "amazon.titan-embed-text-v2:0")
 CLAUDE_MODEL_ID = os.environ.get("CLAUDE_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0")
-TOP_K = int(os.environ.get("TOP_K", "5"))
-REGION = os.environ.get("AWS_REGION", "us-west-2")
+TOP_K           = int(os.environ.get("TOP_K", "5"))
+REGION          = os.environ.get("AWS_REGION", "us-west-2")
 
 # ---------------------------------------------------------------------------
 # AWS clients
 # ---------------------------------------------------------------------------
+s3_client       = boto3.client("s3", region_name=REGION)
 bedrock_runtime = boto3.client("bedrock-runtime", region_name=REGION)
-
-credentials = boto3.Session().get_credentials()
-awsauth = AWS4Auth(
-    credentials.access_key,
-    credentials.secret_key,
-    REGION,
-    "aoss",
-    session_token=credentials.token,
-)
-
-opensearch_client = OpenSearch(
-    hosts=[OPENSEARCH_ENDPOINT],
-    http_auth=awsauth,
-    use_ssl=True,
-    verify_certs=True,
-    connection_class=RequestsHttpConnection,
-    timeout=30,
-)
 
 # System prompt template
 SYSTEM_PROMPT = (
@@ -84,24 +66,23 @@ def embed(text: str) -> list[float]:
 
 
 def search(query_vector: list[float], k: int = TOP_K) -> list[dict]:
-    """Run a k-NN search and return the top-k hit source documents."""
-    query_body = {
-        "size": k,
-        "query": {
-            "knn": {
-                "embedding": {
-                    "vector": query_vector,
-                    "k": k,
-                }
-            }
-        },
-        "_source": {
-            "excludes": ["embedding"]   # don't return the large vector in results
-        },
-    }
-    response = opensearch_client.search(index=INDEX_NAME, body=query_body)
-    hits = response.get("hits", {}).get("hits", [])
-    return [hit["_source"] for hit in hits]
+    """Load the S3 vector index and return the top-k most similar chunks."""
+    try:
+        obj = s3_client.get_object(Bucket=INDEX_BUCKET, Key=INDEX_KEY)
+        index = json.loads(obj["Body"].read().decode("utf-8"))
+    except s3_client.exceptions.NoSuchKey:
+        logger.warning("Vector index not found at s3://%s/%s", INDEX_BUCKET, INDEX_KEY)
+        return []
+
+    if not index:
+        return []
+
+    # Vectors are L2-normalised (Titan normalize=True), so dot product == cosine similarity.
+    vectors = np.array([entry["embedding"] for entry in index], dtype=np.float32)
+    q = np.array(query_vector, dtype=np.float32)
+    scores = vectors @ q                       # shape: (n,)
+    top_indices = np.argsort(scores)[::-1][:k]
+    return [{key: val for key, val in index[i].items() if key != "embedding"} for i in top_indices]
 
 
 def build_context(hits: list[dict]) -> str:
@@ -230,7 +211,7 @@ def handler(event: dict, context) -> dict:  # noqa: ANN001
 
         # 2. Retrieve top-k chunks
         hits = search(query_vector)
-        logger.info("Retrieved %d chunks from OpenSearch", len(hits))
+        logger.info("Retrieved %d chunks from S3 index", len(hits))
 
         # 3. Build context
         context_text = build_context(hits)
