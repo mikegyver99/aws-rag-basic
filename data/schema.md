@@ -42,11 +42,12 @@ The `attributes` object is flexible; any of the following keys may be present de
 | `sport`       | string  | `"Hiking"`, `"Cycling"`, `"Paddling"`            |
 | `terrain`     | string  | `"Trail"`, `"Road"`, `"Whitewater"`              |
 
-## OpenSearch Document Structure
+## Vector Index Document Structure
 
 Each product is split into one or more **chunks** before indexing. The chunk
 boundaries follow the `description` field (~400 tokens per chunk). All other
-fields are stored as metadata alongside every chunk.
+fields are stored as metadata alongside every chunk in the S3-backed vector
+index.
 
 ```json
 {
@@ -74,8 +75,8 @@ products.json (or POST /products)
         │  Bedrock Titan Embed v2  →  1536-dim vector
         │
         ▼
-  OpenSearch Serverless
-  (k-NN index, cosine similarity)
+      S3 vector index
+      (JSON document store with embeddings)
 ```
 
 ## Query Flow
@@ -86,9 +87,10 @@ User question (chat UI)
         ▼
   Query Lambda
         │  Bedrock Titan Embed v2  →  question vector
-        │  k-NN search (top 5 chunks)
+        │  cosine similarity search (top 5 chunks)
+        │  against S3 vector index
         │  build prompt: system + context chunks + question
-        │  Claude 3 Haiku (Bedrock)  →  answer
+        │  Anthropic model via Bedrock  →  answer
         │
         ▼
   Chat UI
