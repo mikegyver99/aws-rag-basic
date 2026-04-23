@@ -89,7 +89,7 @@ terraform plan -out=plan.tfplan
 ## Manual Actions
 There are no required manual dependency-build steps for the current implementation.
 
-If you previously built a local Lambda layer for numpy, remove it before the next deploy so Terraform does not package stale files:
+If you previously built local files under `lambdas/layer/python`, remove them before the next deploy so Terraform does not package stale layer artifacts:
 
 ```bash
 cd <repo root>
