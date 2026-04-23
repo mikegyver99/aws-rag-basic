@@ -1,7 +1,0 @@
-.terraform/*
-.terraform.lock.hcl
-backend.rendered.conf
-plan.tfplan
-environments/qa/.terraform/*
-environments/dev/.terraform/*
-environments/dev/*.zip
